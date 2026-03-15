@@ -1,580 +1,1159 @@
 <!DOCTYPE html>
+
 <html lang="th">
+
 <head>
+
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>L'uara Pro B5+ — Product Testing Report</title>
+
 <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+
 <style>
+
 :root{--bg:#F8F6F2;--surface:#FFFFFF;--surface2:#F2EFE9;--ink:#1A1714;--ink2:#4A4540;--ink3:#9C9189;--gold:#B8925A;--gold-l:#F5EAD8;--navy:#1C3A5E;--navy-l:#E8EFF7;--teal:#1A6B55;--teal-l:#E4F2ED;--amber:#9E6A0E;--amber-l:#FDF2DC;--red:#9B2C2C;--red-l:#FDF0F0;--border:rgba(0,0,0,0.08);--r:12px;--r-sm:8px;--sh:0 1px 3px rgba(0,0,0,0.06),0 4px 16px rgba(0,0,0,0.05)}
+
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
 body{font-family:'Sarabun',sans-serif;background:var(--bg);color:var(--ink);font-size:14px;line-height:1.65;-webkit-font-smoothing:antialiased}
 
+
+
 /* Topbar */
+
 .topbar{background:var(--navy);color:#fff;padding:0 48px;display:flex;align-items:stretch;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,0.18)}
+
 .brand{display:flex;align-items:center;gap:10px;padding:14px 24px 14px 0;border-right:1px solid rgba(255,255,255,0.12);margin-right:24px;flex-shrink:0}
+
 .brand-dot{width:7px;height:7px;border-radius:50%;background:var(--gold)}
+
 .brand-name{font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:500;color:#fff;white-space:nowrap}
+
 .week-tabs{display:flex;align-items:stretch}
+
 .wtab{padding:0 20px;display:flex;align-items:center;gap:8px;font-size:12px;font-weight:500;color:rgba(255,255,255,0.45);cursor:pointer;border-bottom:2px solid transparent;transition:all .2s;white-space:nowrap}
+
 .wtab:hover{color:rgba(255,255,255,0.75)}
+
 .wtab.active{color:#fff;border-bottom-color:var(--gold)}
+
 .wtab-badge{background:rgba(255,255,255,0.1);border-radius:20px;padding:1px 8px;font-size:10px;font-weight:600}
+
 .wtab.active .wtab-badge{background:var(--gold);color:#fff}
+
 .topbar-meta{margin-left:auto;display:flex;align-items:center;gap:6px;padding-left:24px;border-left:1px solid rgba(255,255,255,0.1);font-size:11px;color:rgba(255,255,255,0.4)}
 
+
+
 /* Week pages */
+
 .week-page{display:none}
+
 .week-page.active{display:block;animation:fadeIn .22s ease}
+
 @keyframes fadeIn{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
 
+
+
 /* Page header */
+
 .page-hdr{background:var(--navy);color:#fff;padding:34px 48px 30px}
+
 .page-hdr-inner{max-width:1160px;margin:0 auto;display:grid;grid-template-columns:1fr auto;gap:32px;align-items:end}
+
 .eyebrow{font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+
 .page-hdr h1{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:500;line-height:1.2}
+
 .page-hdr p{font-size:13px;color:rgba(255,255,255,.38);margin-top:4px}
+
 .hdr-pills{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
+
 .hpill{font-size:11px;font-weight:600;padding:3px 11px;border-radius:20px}
+
 .hpill-g{background:rgba(26,107,85,.3);color:#6DCFAA}
+
 .hpill-a{background:rgba(158,106,14,.3);color:#F0C06E}
+
 .hpill-b{background:rgba(255,255,255,.12);color:rgba(255,255,255,.7)}
+
 .hdr-stat{text-align:right}
+
 .hdr-big{font-size:36px;font-weight:600;line-height:1;color:#fff}
+
 .hdr-sm{font-size:11px;color:rgba(255,255,255,.32);margin-top:3px}
 
+
+
 /* Sub-nav */
+
 .subnav{background:var(--surface);border-bottom:1px solid var(--border);padding:0 48px;display:flex;overflow-x:auto}
+
 .stab{padding:12px 16px;font-size:12px;font-weight:500;color:var(--ink3);cursor:pointer;border-bottom:2px solid transparent;transition:all .2s;white-space:nowrap}
+
 .stab:hover{color:var(--ink)}
+
 .stab.active{color:var(--navy);border-bottom-color:var(--navy)}
 
+
+
 /* Main */
+
 .main{max-width:1160px;margin:0 auto;padding:26px 48px 72px}
+
 .tab-section{display:none}
+
 .tab-section.active{display:block}
 
+
+
 /* KPI */
+
 .kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:22px}
+
 .kpi{background:var(--surface);border-radius:var(--r);padding:20px 22px;box-shadow:var(--sh);border-top:3px solid transparent}
+
 .kpi-lbl{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink3);margin-bottom:6px}
+
 .kpi-val{font-size:30px;font-weight:600;line-height:1;margin-bottom:3px}
+
 .kpi-sub{font-size:12px;color:var(--ink3)}
 
+
+
 /* Grids */
+
 .g2{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:18px}
+
 .g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:18px}
+
 .g13{display:grid;grid-template-columns:1.4fr 1fr;gap:18px;margin-bottom:18px}
 
+
+
 /* Cards */
+
 .card{background:var(--surface);border-radius:var(--r);padding:22px 24px;box-shadow:var(--sh)}
+
 .card-title{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:var(--ink3);margin-bottom:16px}
 
+
+
 /* Disclaimer */
+
 .disclaimer{background:var(--amber-l);border:1px solid #DEB96A;border-left:4px solid var(--amber);border-radius:0 var(--r-sm) var(--r-sm) 0;padding:12px 16px;margin-bottom:20px;font-size:12px;color:#5C3A08;line-height:1.7}
+
 .disclaimer strong{font-weight:600;color:var(--amber)}
 
+
+
 /* Bar rows */
+
 .bar-row{display:flex;align-items:center;gap:10px;margin:7px 0}
+
 .bar-lbl{min-width:130px;font-size:12px;color:var(--ink2);text-align:right}
+
 .bar-track{flex:1;height:10px;background:var(--surface2);border-radius:5px;overflow:hidden}
+
 .bar-fill{height:100%;border-radius:5px}
+
 .bar-num{min-width:28px;font-size:12px;color:var(--ink3);font-weight:500}
 
+
+
 /* Delta rows */
+
 .delta-row{display:grid;grid-template-columns:110px 1fr 56px;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid var(--surface2)}
+
 .delta-row:last-child{border:none}
+
 .delta-lbl{font-size:12px;color:var(--ink2);font-weight:500}
+
 .delta-bars{display:flex;flex-direction:column;gap:4px}
+
 .delta-bar-row{display:flex;align-items:center;gap:7px}
+
 .delta-tag{font-size:10px;color:var(--ink3);min-width:22px}
+
 .delta-track{flex:1;height:8px;background:var(--surface2);border-radius:4px;overflow:hidden}
+
 .delta-fill{height:100%;border-radius:4px}
+
 .delta-num{font-size:11px;font-weight:600;color:var(--ink3);min-width:28px;text-align:right}
+
 .delta-val{font-size:14px;font-weight:600;text-align:right}
 
+
+
 /* Insights */
+
 .insight{border-left:3px solid;border-radius:0 var(--r-sm) var(--r-sm) 0;padding:10px 14px;margin-top:10px;font-size:12px;line-height:1.65}
+
 .ins-teal{background:var(--teal-l);border-color:var(--teal);color:#0F4A35}
+
 .ins-amber{background:var(--amber-l);border-color:var(--amber);color:#5C3A08}
+
 .ins-navy{background:var(--navy-l);border-color:var(--navy);color:#0C2A4A}
+
 .ins-red{background:var(--red-l);border-color:var(--red);color:#6B1010}
 
+
+
 /* Heatmap */
+
 .heat-wrap{overflow-x:auto}
+
 table.heat{width:100%;border-collapse:separate;border-spacing:3px;font-size:12px}
+
 table.heat th{padding:6px 10px;font-weight:600;color:var(--ink3);font-size:10px;text-transform:uppercase;letter-spacing:.06em;text-align:center}
+
 table.heat td{padding:8px 12px;text-align:center;font-weight:500;border-radius:6px}
+
 table.heat td.row-lbl{text-align:right;color:var(--ink2);font-weight:400;padding-right:14px;background:none;font-size:12px}
 
+
+
 /* Seg cards */
+
 .seg-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:18px}
+
 .seg-card{background:var(--surface);border-radius:var(--r);padding:20px 22px;box-shadow:var(--sh);border-top:3px solid}
+
 .seg-num{font-size:34px;font-weight:600;line-height:1;margin-bottom:4px}
+
 .seg-lbl{font-size:13px;font-weight:600;margin-bottom:4px}
+
 .seg-sub{font-size:12px;color:var(--ink2);line-height:1.6}
 
+
+
 /* Risk chips */
+
 .risk-row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px}
+
 .rchip{display:flex;align-items:center;gap:6px;font-size:12px;padding:5px 12px;border-radius:20px;border:1px solid transparent}
+
 .rchip-ok{background:var(--teal-l);border-color:#9AD4C3;color:var(--teal)}
+
 .rchip-warn{background:var(--amber-l);border-color:#DEB96A;color:var(--amber)}
 
+
+
 /* Risk grid */
+
 .risk-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+
 .risk-item{background:var(--surface2);border-radius:var(--r-sm);padding:14px 16px}
+
 .risk-title{font-size:12px;font-weight:600;margin-bottom:4px}
+
 .risk-body{font-size:11px;color:var(--ink2);line-height:1.6}
 
+
+
 /* Sat rows */
+
 .sat-row{display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid var(--surface2)}
+
 .sat-row:last-child{border:none}
+
 .sat-lbl{font-size:12px;color:var(--ink2);flex:1}
+
 .sat-bar-track{width:88px;height:8px;background:var(--surface2);border-radius:4px;overflow:hidden;flex-shrink:0}
+
 .sat-bar-fill{height:100%;border-radius:4px}
+
 .sat-num{font-size:12px;font-weight:600;min-width:34px;text-align:right}
 
+
+
 /* MM rows */
+
 .mm-row{display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid var(--surface2)}
+
 .mm-row:last-child{border:none}
+
 .mm-av{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;background:var(--red-l);color:var(--red);flex-shrink:0}
+
 .mm-info{flex:1}
+
 .mm-main{font-size:12px;font-weight:500}
+
 .mm-sub{font-size:11px;color:var(--ink3)}
+
 .badge-mm{font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;background:var(--red-l);color:var(--red)}
 
+
+
 /* RT rows */
+
 .rt-row{display:flex;align-items:center;gap:10px;padding:6px 0}
+
 .rt-name{min-width:130px;font-size:12px;color:var(--ink2)}
+
 .rt-track{flex:1;height:9px;background:var(--surface2);border-radius:5px;overflow:hidden}
+
 .rt-fill{height:100%;border-radius:5px}
+
 .rt-pct{font-size:12px;font-weight:600;color:var(--ink2);min-width:36px;text-align:right}
 
+
+
 /* Sens */
+
 .sens-item{padding:9px 14px;border-radius:var(--r-sm);font-size:12px;margin:5px 0;background:var(--surface2);color:var(--ink2);line-height:1.6}
 
+
+
 /* Chart */
+
 .chart-wrap{position:relative}
 
+
+
 /* Sec divider */
+
 .sec-div{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--ink3);border-bottom:1px solid var(--border);padding-bottom:8px;margin:24px 0 16px}
 
+
+
 /* Cohort highlight boxes */
+
 .cohort-box{border-radius:var(--r-sm);padding:16px;border-left:3px solid}
 
+
+
 /* Animations */
+
 @keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
 .card,.kpi,.seg-card{animation:fadeUp .3s ease both}
 
+
+
 @media(max-width:900px){
-  .topbar,.page-hdr,.subnav,.main{padding-left:20px;padding-right:20px}
-  .page-hdr-inner{grid-template-columns:1fr}
-  .kpi-grid,.g2,.g3,.g13,.seg-grid,.risk-grid{grid-template-columns:1fr}
+
+  .topbar,.page-hdr,.subnav,.main{padding-left:20px;padding-right:20px}
+
+  .page-hdr-inner{grid-template-columns:1fr}
+
+  .kpi-grid,.g2,.g3,.g13,.seg-grid,.risk-grid{grid-template-columns:1fr}
+
 }
+
 </style>
+
 </head>
+
 <body>
 
+
+
 <div class="topbar">
-  <div class="brand">
-    <div class="brand-dot"></div>
-    <div class="brand-name">L'uara Pro B5+</div>
-  </div>
-  <div class="week-tabs">
-    <div class="wtab active" onclick="switchWeek('w0',this)">Week 0 <span class="wtab-badge">Baseline</span></div>
-    <div class="wtab" onclick="switchWeek('w1',this)">Week 1 <span class="wtab-badge">7 Days</span></div>
-  </div>
-  <div class="topbar-meta">Law Group &nbsp;·&nbsp; March 2026</div>
+
+  <div class="brand">
+
+    <div class="brand-dot"></div>
+
+    <div class="brand-name">L'uara Pro B5+</div>
+
+  </div>
+
+  <div class="week-tabs">
+
+    <div class="wtab active" onclick="switchWeek('w0',this)">Week 0 <span class="wtab-badge">Baseline</span></div>
+
+    <div class="wtab" onclick="switchWeek('w1',this)">Week 1 <span class="wtab-badge">7 Days</span></div>
+
+  </div>
+
+  <div class="topbar-meta">Law Group &nbsp;·&nbsp; March 2026</div>
+
 </div>
+
+
 
 <!-- ══ WEEK 0 ══ -->
+
 <div class="week-page active" id="page-w0">
-  <div class="page-hdr">
-    <div class="page-hdr-inner">
-      <div>
-        <div class="eyebrow">Pre-launch · Baseline Survey</div>
-        <h1>Week 0 — Baseline Analysis</h1>
-        <p>ข้อมูลพื้นฐานก่อนเริ่มทดสอบสูตร B5+ · Law Group</p>
-        <div class="hdr-pills">
-          <span class="hpill hpill-g">41 คน เข้าร่วม</span>
-          <span class="hpill hpill-a">68 คน กลุ่มทั้งหมด</span>
-          <span class="hpill hpill-b">Validity 76%</span>
-        </div>
-      </div>
-      <div class="hdr-stat"><div class="hdr-big">60.3%</div><div class="hdr-sm">Response rate</div></div>
-    </div>
-  </div>
 
-  <div class="subnav" id="snav-w0">
-    <div class="stab active" onclick="switchTab('w0','ov',this)">ภาพรวม</div>
-    <div class="stab" onclick="switchTab('w0','sc',this)">คะแนนผิว</div>
-    <div class="stab" onclick="switchTab('w0','sg',this)">Segments</div>
-    <div class="stab" onclick="switchTab('w0','rk',this)">Protocol & Risks</div>
-  </div>
+  <div class="page-hdr">
 
-  <div class="main">
+    <div class="page-hdr-inner">
 
-    <div class="tab-section active" id="w0-ov">
-      <div class="kpi-grid">
-        <div class="kpi" style="border-top-color:var(--teal)"><div class="kpi-lbl">เข้าร่วมสำเร็จ</div><div class="kpi-val" style="color:var(--teal)">41</div><div class="kpi-sub">60.3% ของทั้งหมด</div></div>
-        <div class="kpi" style="border-top-color:var(--amber)"><div class="kpi-lbl">ยังไม่ติดต่อได้</div><div class="kpi-val" style="color:var(--amber)">27</div><div class="kpi-sub">In Progress / Follow-up</div></div>
-        <div class="kpi" style="border-top-color:var(--navy)"><div class="kpi-lbl">ปัญหาหลัก #1</div><div class="kpi-val" style="color:var(--navy);font-size:18px;padding-top:6px">ริ้วรอย</div><div class="kpi-sub">61% ของผู้ตอบ</div></div>
-        <div class="kpi" style="border-top-color:var(--gold)"><div class="kpi-lbl">ผิวประเภทหลัก</div><div class="kpi-val" style="color:var(--gold);font-size:18px;padding-top:6px">ผิวผสม</div><div class="kpi-sub">51% ของผู้ตอบ</div></div>
-      </div>
-      <div class="g13">
-        <div class="card">
-          <div class="card-title">ปัญหาผิวหลัก (most_problem_concern — เลือก 1 ข้อ)</div>
-          <div class="bar-row"><span class="bar-lbl">ริ้วรอย (รวม)</span><div class="bar-track"><div class="bar-fill" style="width:100%;background:var(--navy)"></div></div><span class="bar-num">25</span></div>
-          <div class="bar-row"><span class="bar-lbl">กระจ่างใส (รวม)</span><div class="bar-track"><div class="bar-fill" style="width:20%;background:var(--teal)"></div></div><span class="bar-num">5</span></div>
-          <div class="bar-row"><span class="bar-lbl">ฝ้า / กระ (รวม)</span><div class="bar-track"><div class="bar-fill" style="width:16%;background:var(--amber)"></div></div><span class="bar-num">4</span></div>
-          <div class="bar-row"><span class="bar-lbl">ชุ่มชื้น (รวม)</span><div class="bar-track"><div class="bar-fill" style="width:16%;background:var(--amber)"></div></div><span class="bar-num">4</span></div>
-          <div class="bar-row"><span class="bar-lbl">จุดด่างดำ</span><div class="bar-track"><div class="bar-fill" style="width:8%;background:var(--ink3)"></div></div><span class="bar-num">2</span></div>
-          <div class="insight ins-teal">61% ของกลุ่มมีริ้วรอยเป็นปัญหาหลัก ตรงกับ Primary benefit ของสูตร B5+</div>
-        </div>
-        <div class="card">
-          <div class="card-title">ประเภทผิว (n=41)</div>
-          <div class="chart-wrap" style="height:185px"><canvas id="w0Pie"></canvas></div>
-          <div style="margin-top:10px;display:flex;flex-direction:column;gap:4px">
-            <div style="display:flex;justify-content:space-between;font-size:12px"><span style="color:var(--ink2)">ผิวผสม</span><strong>22 คน (54%)</strong></div>
-            <div style="display:flex;justify-content:space-between;font-size:12px"><span style="color:var(--ink2)">ผิวมัน</span><strong>7 คน (17%)</strong></div>
-            <div style="display:flex;justify-content:space-between;font-size:12px"><span style="color:var(--ink2)">ผิวธรรมดา / แห้ง</span><strong>6+6 คน (29%)</strong></div>
-          </div>
-        </div>
-      </div>
-      <div class="g2">
-        <div class="card">
-          <div class="card-title">ผลลัพธ์หลักที่คาดหวัง (MostExpectedBenefit)</div>
-          <div class="bar-row"><span class="bar-lbl">ริ้วรอย</span><div class="bar-track"><div class="bar-fill" style="width:100%;background:var(--navy)"></div></div><span class="bar-num">24</span></div>
-          <div class="bar-row"><span class="bar-lbl">กระจ่างใส</span><div class="bar-track"><div class="bar-fill" style="width:38%;background:var(--teal)"></div></div><span class="bar-num">9</span></div>
-          <div class="bar-row"><span class="bar-lbl">ชุ่มชื้น</span><div class="bar-track"><div class="bar-fill" style="width:17%;background:var(--amber)"></div></div><span class="bar-num">4</span></div>
-          <div class="insight ins-navy">80% ของกลุ่มคาดหวังให้ริ้วรอยลดลง — align กับ product direction</div>
-        </div>
-        <div class="card">
-          <div class="card-title">ตำแหน่งริ้วรอย</div>
-          <div class="bar-row"><span class="bar-lbl">หน้าผาก</span><div class="bar-track"><div class="bar-fill" style="width:100%;background:var(--navy)"></div></div><span class="bar-num">26</span></div>
-          <div class="bar-row"><span class="bar-lbl">แก้ม</span><div class="bar-track"><div class="bar-fill" style="width:92%;background:var(--navy)"></div></div><span class="bar-num">24</span></div>
-          <div class="bar-row"><span class="bar-lbl">หางตา</span><div class="bar-track"><div class="bar-fill" style="width:62%;background:#7BA7D4"></div></div><span class="bar-num">16</span></div>
-          <div class="bar-row"><span class="bar-lbl">ใต้ตา</span><div class="bar-track"><div class="bar-fill" style="width:35%;background:#7BA7D4"></div></div><span class="bar-num">9</span></div>
-        </div>
-      </div>
-    </div>
+      <div>
 
-    <div class="tab-section" id="w0-sc">
-      <div class="card" style="margin-bottom:18px">
-        <div class="card-title">คะแนน Baseline 5 มิติ (เฉลี่ยกลุ่ม, scale 1–5 absolute)</div>
-        <div id="w0ScoreRows"></div>
-        <div class="insight ins-red">ริ้วรอยคะแนนต่ำสุด (2.88/5) มี room to improve สูงสุด เหมาะที่สุดสำหรับทดสอบ Primary benefit ของ B5+</div>
-      </div>
-      <div class="g2">
-        <div class="card">
-          <div class="card-title">ความพึงพอใจผิวก่อนทดสอบ (n=41)</div>
-          <div class="chart-wrap" style="height:195px"><canvas id="w0Sat"></canvas></div>
-          <div class="insight ins-amber">73% คะแนน 4–5 → ceiling effect อาจทำให้ detect improvement ยาก</div>
-        </div>
-        <div class="card">
-          <div class="card-title">Score Matrix แยก SkinType</div>
-          <div class="heat-wrap"><table class="heat"><thead><tr><th style="text-align:right;padding-right:14px">ประเภทผิว</th><th>ชุ่มชื้น</th><th>เรียบเนียน</th><th>กระจ่างใส</th><th>ฝ้า/จุด</th><th>ริ้วรอย</th></tr></thead><tbody id="heatBody"></tbody></table></div>
-          <div class="insight ins-navy">ผิวมันมีคะแนนริ้วรอยต่ำสุด (2.14) แม้ชุ่มชื้นดีมาก — ปัญหา aging ไม่เกี่ยวกับ hydration</div>
-        </div>
-      </div>
-    </div>
+        <div class="eyebrow">Pre-launch · Baseline Survey</div>
 
-    <div class="tab-section" id="w0-sg">
-      <div class="seg-grid">
-        <div class="seg-card" style="border-top-color:var(--amber)">
-          <div class="seg-num" style="color:var(--amber)">5</div>
-          <div class="seg-lbl">Ideal Tester</div>
-          <div class="seg-sub">Satisfaction ≤3 และ Fine Lines ≤3 มีปัญหาจริง room to improve สูงสุด</div>
-          <div class="insight ins-amber">Core group — ติดตามทุกสัปดาห์</div>
-        </div>
-        <div class="seg-card" style="border-top-color:var(--red)">
-          <div class="seg-num" style="color:var(--red)">9</div>
-          <div class="seg-lbl">Handle with Care</div>
-          <div class="seg-sub">ใช้ครีมแพทย์ / ผลิตภัณฑ์ซ้อน ต้องประเมิน interaction</div>
-          <div class="insight ins-red">พิจารณา track แยก subgroup</div>
-        </div>
-        <div class="seg-card" style="border-top-color:var(--teal)">
-          <div class="seg-num" style="color:var(--teal)">2</div>
-          <div class="seg-lbl">Watch List</div>
-          <div class="seg-sub">ผิวอ่อนแอ (Sensitivity 1–2) เสี่ยงแพ้ระหว่างทดสอบ</div>
-          <div class="insight ins-teal">W1: ผ่านสัปดาห์แรกโดยไม่มี adverse reaction</div>
-        </div>
-      </div>
-      <div class="g2">
-        <div class="card">
-          <div class="card-title">Expectation Mismatch — 4 คน</div>
-          <p style="font-size:12px;color:var(--ink2);margin-bottom:12px">ปัญหาจริงกับสิ่งที่คาดหวังไม่ตรงกัน เสี่ยง negative feedback แม้สูตรจะทำงานได้</p>
-          <div class="mm-row"><div class="mm-av">14</div><div class="mm-info"><p class="mm-main">ปัญหา: ฝ้า/กระ</p><p class="mm-sub">คาดหวัง: ริ้วรอยลดลง</p></div><span class="badge-mm">ไม่ตรง</span></div>
-          <div class="mm-row"><div class="mm-av">19</div><div class="mm-info"><p class="mm-main">ปัญหา: ริ้วรอย</p><p class="mm-sub">คาดหวัง: ผิวกระจ่างใส</p></div><span class="badge-mm">ไม่ตรง</span></div>
-          <div class="mm-row"><div class="mm-av">45</div><div class="mm-info"><p class="mm-main">ปัญหา: ริ้วรอย</p><p class="mm-sub">คาดหวัง: ผิวกระจ่างใส</p></div><span class="badge-mm">ไม่ตรง</span></div>
-          <div class="mm-row"><div class="mm-av">58</div><div class="mm-info"><p class="mm-main">ปัญหา: ริ้วรอย</p><p class="mm-sub">คาดหวัง: ผิวกระจ่างใส</p></div><span class="badge-mm">ไม่ตรง</span></div>
-          <div class="insight ins-red">Re-brief ก่อน Week 1 เพื่อป้องกัน false negative</div>
-        </div>
-        <div class="card">
-          <div class="card-title">สัดส่วน Segment (n=41)</div>
-          <div class="chart-wrap" style="height:195px"><canvas id="w0Seg"></canvas></div>
-          <div style="margin-top:10px;display:flex;flex-direction:column;gap:4px">
-            <div style="display:flex;justify-content:space-between;font-size:12px"><span>Standard</span><strong>25 คน (61%)</strong></div>
-            <div style="display:flex;justify-content:space-between;font-size:12px"><span>Handle with Care</span><strong>9 คน (22%)</strong></div>
-            <div style="display:flex;justify-content:space-between;font-size:12px"><span>Ideal Tester</span><strong>5 คน (12%)</strong></div>
-            <div style="display:flex;justify-content:space-between;font-size:12px"><span>Watch List</span><strong>2 คน (5%)</strong></div>
-          </div>
-        </div>
-      </div>
-    </div>
+        <h1>Week 0 — Baseline Analysis</h1>
 
-    <div class="tab-section" id="w0-rk">
-      <div class="sec-div">สถานะ Protocol Risks — อัปเดต ณ Week 1</div>
-      <div class="risk-row">
-        <div class="rchip rchip-ok">✅ Trylagina — หยุดแล้ว</div>
-        <div class="rchip rchip-ok">✅ Minus — หยุดแล้ว</div>
-        <div class="rchip rchip-warn">⚠ Special products 9 คน</div>
-        <div class="rchip rchip-warn">⚠ Ceiling effect 7 คน</div>
-        <div class="rchip rchip-warn">⚠ Expectation mismatch 4 คน</div>
-      </div>
-      <div class="g2">
-        <div class="card">
-          <div class="card-title">การใช้ผลิตภัณฑ์ก่อนทดสอบ</div>
-          <div class="rt-row"><span class="rt-name">Trylagina (สูตรเดิม)</span><div class="rt-track"><div class="rt-fill" style="width:98%;background:var(--navy)"></div></div><span class="rt-pct">98%</span></div>
-          <div class="rt-row"><span class="rt-name">Sunscreen</span><div class="rt-track"><div class="rt-fill" style="width:98%;background:#5B8FC4"></div></div><span class="rt-pct">98%</span></div>
-          <div class="rt-row"><span class="rt-name">Special (ครีมอื่น)</span><div class="rt-track"><div class="rt-fill" style="width:23%;background:var(--amber)"></div></div><span class="rt-pct">23%</span></div>
-          <div class="rt-row"><span class="rt-name">Serum</span><div class="rt-track"><div class="rt-fill" style="width:21%;background:var(--ink3)"></div></div><span class="rt-pct">21%</span></div>
-          <div class="insight ins-teal">Trylagina &amp; Minus บังคับหยุดก่อน Week 1 แล้ว — Validity Score ขึ้นเป็น 76% (+14%)</div>
-        </div>
-        <div class="card">
-          <div class="card-title">Risk Flags (อัปเดต)</div>
-          <div class="risk-grid">
-            <div class="risk-item" style="background:var(--teal-l)"><div class="risk-title" style="color:var(--teal)">✅ Trylagina — ปิดแล้ว</div><div class="risk-body" style="color:#0F4A35">บังคับหยุดก่อน Week 1</div></div>
-            <div class="risk-item" style="background:var(--teal-l)"><div class="risk-title" style="color:var(--teal)">✅ Minus — ปิดแล้ว</div><div class="risk-body" style="color:#0F4A35">บังคับหยุดก่อน Week 1</div></div>
-            <div class="risk-item"><div class="risk-title">⚠ Special Products (9 คน)</div><div class="risk-body">ครีมแพทย์ซ้อน — track แยก subgroup</div></div>
-            <div class="risk-item"><div class="risk-title">⚠ Ceiling Effect (7 คน)</div><div class="risk-body">Satisfaction 5/5 — ใช้เป็น reference group</div></div>
-          </div>
-        </div>
-      </div>
-    </div>
+        <p>ข้อมูลพื้นฐานก่อนเริ่มทดสอบสูตร B5+ · Law Group</p>
 
-  </div>
+        <div class="hdr-pills">
+
+          <span class="hpill hpill-g">41 คน เข้าร่วม</span>
+
+          <span class="hpill hpill-a">68 คน กลุ่มทั้งหมด</span>
+
+          <span class="hpill hpill-b">Validity 76%</span>
+
+        </div>
+
+      </div>
+
+      <div class="hdr-stat"><div class="hdr-big">60.3%</div><div class="hdr-sm">Response rate</div></div>
+
+    </div>
+
+  </div>
+
+
+
+  <div class="subnav" id="snav-w0">
+
+    <div class="stab active" onclick="switchTab('w0','ov',this)">ภาพรวม</div>
+
+    <div class="stab" onclick="switchTab('w0','sc',this)">คะแนนผิว</div>
+
+    <div class="stab" onclick="switchTab('w0','sg',this)">Segments</div>
+
+    <div class="stab" onclick="switchTab('w0','rk',this)">Protocol & Risks</div>
+
+  </div>
+
+
+
+  <div class="main">
+
+
+
+    <div class="tab-section active" id="w0-ov">
+
+      <div class="kpi-grid">
+
+        <div class="kpi" style="border-top-color:var(--teal)"><div class="kpi-lbl">เข้าร่วมสำเร็จ</div><div class="kpi-val" style="color:var(--teal)">41</div><div class="kpi-sub">60.3% ของทั้งหมด</div></div>
+
+        <div class="kpi" style="border-top-color:var(--amber)"><div class="kpi-lbl">ยังไม่ติดต่อได้</div><div class="kpi-val" style="color:var(--amber)">27</div><div class="kpi-sub">In Progress / Follow-up</div></div>
+
+        <div class="kpi" style="border-top-color:var(--navy)"><div class="kpi-lbl">ปัญหาหลัก #1</div><div class="kpi-val" style="color:var(--navy);font-size:18px;padding-top:6px">ริ้วรอย</div><div class="kpi-sub">61% ของผู้ตอบ</div></div>
+
+        <div class="kpi" style="border-top-color:var(--gold)"><div class="kpi-lbl">ผิวประเภทหลัก</div><div class="kpi-val" style="color:var(--gold);font-size:18px;padding-top:6px">ผิวผสม</div><div class="kpi-sub">51% ของผู้ตอบ</div></div>
+
+      </div>
+
+      <div class="g13">
+
+        <div class="card">
+
+          <div class="card-title">ปัญหาผิวหลัก (most_problem_concern — เลือก 1 ข้อ)</div>
+
+          <div class="bar-row"><span class="bar-lbl">ริ้วรอย (รวม)</span><div class="bar-track"><div class="bar-fill" style="width:100%;background:var(--navy)"></div></div><span class="bar-num">25</span></div>
+
+          <div class="bar-row"><span class="bar-lbl">กระจ่างใส (รวม)</span><div class="bar-track"><div class="bar-fill" style="width:20%;background:var(--teal)"></div></div><span class="bar-num">5</span></div>
+
+          <div class="bar-row"><span class="bar-lbl">ฝ้า / กระ (รวม)</span><div class="bar-track"><div class="bar-fill" style="width:16%;background:var(--amber)"></div></div><span class="bar-num">4</span></div>
+
+          <div class="bar-row"><span class="bar-lbl">ชุ่มชื้น (รวม)</span><div class="bar-track"><div class="bar-fill" style="width:16%;background:var(--amber)"></div></div><span class="bar-num">4</span></div>
+
+          <div class="bar-row"><span class="bar-lbl">จุดด่างดำ</span><div class="bar-track"><div class="bar-fill" style="width:8%;background:var(--ink3)"></div></div><span class="bar-num">2</span></div>
+
+          <div class="insight ins-teal">61% ของกลุ่มมีริ้วรอยเป็นปัญหาหลัก ตรงกับ Primary benefit ของสูตร B5+</div>
+
+        </div>
+
+        <div class="card">
+
+          <div class="card-title">ประเภทผิว (n=41)</div>
+
+          <div class="chart-wrap" style="height:185px"><canvas id="w0Pie"></canvas></div>
+
+          <div style="margin-top:10px;display:flex;flex-direction:column;gap:4px">
+
+            <div style="display:flex;justify-content:space-between;font-size:12px"><span style="color:var(--ink2)">ผิวผสม</span><strong>22 คน (54%)</strong></div>
+
+            <div style="display:flex;justify-content:space-between;font-size:12px"><span style="color:var(--ink2)">ผิวมัน</span><strong>7 คน (17%)</strong></div>
+
+            <div style="display:flex;justify-content:space-between;font-size:12px"><span style="color:var(--ink2)">ผิวธรรมดา / แห้ง</span><strong>6+6 คน (29%)</strong></div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="g2">
+
+        <div class="card">
+
+          <div class="card-title">ผลลัพธ์หลักที่คาดหวัง (MostExpectedBenefit)</div>
+
+          <div class="bar-row"><span class="bar-lbl">ริ้วรอย</span><div class="bar-track"><div class="bar-fill" style="width:100%;background:var(--navy)"></div></div><span class="bar-num">24</span></div>
+
+          <div class="bar-row"><span class="bar-lbl">กระจ่างใส</span><div class="bar-track"><div class="bar-fill" style="width:38%;background:var(--teal)"></div></div><span class="bar-num">9</span></div>
+
+          <div class="bar-row"><span class="bar-lbl">ชุ่มชื้น</span><div class="bar-track"><div class="bar-fill" style="width:17%;background:var(--amber)"></div></div><span class="bar-num">4</span></div>
+
+          <div class="insight ins-navy">80% ของกลุ่มคาดหวังให้ริ้วรอยลดลง — align กับ product direction</div>
+
+        </div>
+
+        <div class="card">
+
+          <div class="card-title">ตำแหน่งริ้วรอย</div>
+
+          <div class="bar-row"><span class="bar-lbl">หน้าผาก</span><div class="bar-track"><div class="bar-fill" style="width:100%;background:var(--navy)"></div></div><span class="bar-num">26</span></div>
+
+          <div class="bar-row"><span class="bar-lbl">แก้ม</span><div class="bar-track"><div class="bar-fill" style="width:92%;background:var(--navy)"></div></div><span class="bar-num">24</span></div>
+
+          <div class="bar-row"><span class="bar-lbl">หางตา</span><div class="bar-track"><div class="bar-fill" style="width:62%;background:#7BA7D4"></div></div><span class="bar-num">16</span></div>
+
+          <div class="bar-row"><span class="bar-lbl">ใต้ตา</span><div class="bar-track"><div class="bar-fill" style="width:35%;background:#7BA7D4"></div></div><span class="bar-num">9</span></div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+
+    <div class="tab-section" id="w0-sc">
+
+      <div class="card" style="margin-bottom:18px">
+
+        <div class="card-title">คะแนน Baseline 5 มิติ (เฉลี่ยกลุ่ม, scale 1–5 absolute)</div>
+
+        <div id="w0ScoreRows"></div>
+
+        <div class="insight ins-red">ริ้วรอยคะแนนต่ำสุด (2.88/5) มี room to improve สูงสุด เหมาะที่สุดสำหรับทดสอบ Primary benefit ของ B5+</div>
+
+      </div>
+
+      <div class="g2">
+
+        <div class="card">
+
+          <div class="card-title">ความพึงพอใจผิวก่อนทดสอบ (n=41)</div>
+
+          <div class="chart-wrap" style="height:195px"><canvas id="w0Sat"></canvas></div>
+
+          <div class="insight ins-amber">73% คะแนน 4–5 → ceiling effect อาจทำให้ detect improvement ยาก</div>
+
+        </div>
+
+        <div class="card">
+
+          <div class="card-title">Score Matrix แยก SkinType</div>
+
+          <div class="heat-wrap"><table class="heat"><thead><tr><th style="text-align:right;padding-right:14px">ประเภทผิว</th><th>ชุ่มชื้น</th><th>เรียบเนียน</th><th>กระจ่างใส</th><th>ฝ้า/จุด</th><th>ริ้วรอย</th></tr></thead><tbody id="heatBody"></tbody></table></div>
+
+          <div class="insight ins-navy">ผิวมันมีคะแนนริ้วรอยต่ำสุด (2.14) แม้ชุ่มชื้นดีมาก — ปัญหา aging ไม่เกี่ยวกับ hydration</div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+
+    <div class="tab-section" id="w0-sg">
+
+      <div class="seg-grid">
+
+        <div class="seg-card" style="border-top-color:var(--amber)">
+
+          <div class="seg-num" style="color:var(--amber)">5</div>
+
+          <div class="seg-lbl">Ideal Tester</div>
+
+          <div class="seg-sub">Satisfaction ≤3 และ Fine Lines ≤3 มีปัญหาจริง room to improve สูงสุด</div>
+
+          <div class="insight ins-amber">Core group — ติดตามทุกสัปดาห์</div>
+
+        </div>
+
+        <div class="seg-card" style="border-top-color:var(--red)">
+
+          <div class="seg-num" style="color:var(--red)">9</div>
+
+          <div class="seg-lbl">Handle with Care</div>
+
+          <div class="seg-sub">ใช้ครีมแพทย์ / ผลิตภัณฑ์ซ้อน ต้องประเมิน interaction</div>
+
+          <div class="insight ins-red">พิจารณา track แยก subgroup</div>
+
+        </div>
+
+        <div class="seg-card" style="border-top-color:var(--teal)">
+
+          <div class="seg-num" style="color:var(--teal)">2</div>
+
+          <div class="seg-lbl">Watch List</div>
+
+          <div class="seg-sub">ผิวอ่อนแอ (Sensitivity 1–2) เสี่ยงแพ้ระหว่างทดสอบ</div>
+
+          <div class="insight ins-teal">W1: ผ่านสัปดาห์แรกโดยไม่มี adverse reaction</div>
+
+        </div>
+
+      </div>
+
+      <div class="g2">
+
+        <div class="card">
+
+          <div class="card-title">Expectation Mismatch — 4 คน</div>
+
+          <p style="font-size:12px;color:var(--ink2);margin-bottom:12px">ปัญหาจริงกับสิ่งที่คาดหวังไม่ตรงกัน เสี่ยง negative feedback แม้สูตรจะทำงานได้</p>
+
+          <div class="mm-row"><div class="mm-av">14</div><div class="mm-info"><p class="mm-main">ปัญหา: ฝ้า/กระ</p><p class="mm-sub">คาดหวัง: ริ้วรอยลดลง</p></div><span class="badge-mm">ไม่ตรง</span></div>
+
+          <div class="mm-row"><div class="mm-av">19</div><div class="mm-info"><p class="mm-main">ปัญหา: ริ้วรอย</p><p class="mm-sub">คาดหวัง: ผิวกระจ่างใส</p></div><span class="badge-mm">ไม่ตรง</span></div>
+
+          <div class="mm-row"><div class="mm-av">45</div><div class="mm-info"><p class="mm-main">ปัญหา: ริ้วรอย</p><p class="mm-sub">คาดหวัง: ผิวกระจ่างใส</p></div><span class="badge-mm">ไม่ตรง</span></div>
+
+          <div class="mm-row"><div class="mm-av">58</div><div class="mm-info"><p class="mm-main">ปัญหา: ริ้วรอย</p><p class="mm-sub">คาดหวัง: ผิวกระจ่างใส</p></div><span class="badge-mm">ไม่ตรง</span></div>
+
+          <div class="insight ins-red">Re-brief ก่อน Week 1 เพื่อป้องกัน false negative</div>
+
+        </div>
+
+        <div class="card">
+
+          <div class="card-title">สัดส่วน Segment (n=41)</div>
+
+          <div class="chart-wrap" style="height:195px"><canvas id="w0Seg"></canvas></div>
+
+          <div style="margin-top:10px;display:flex;flex-direction:column;gap:4px">
+
+            <div style="display:flex;justify-content:space-between;font-size:12px"><span>Standard</span><strong>25 คน (61%)</strong></div>
+
+            <div style="display:flex;justify-content:space-between;font-size:12px"><span>Handle with Care</span><strong>9 คน (22%)</strong></div>
+
+            <div style="display:flex;justify-content:space-between;font-size:12px"><span>Ideal Tester</span><strong>5 คน (12%)</strong></div>
+
+            <div style="display:flex;justify-content:space-between;font-size:12px"><span>Watch List</span><strong>2 คน (5%)</strong></div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+
+    <div class="tab-section" id="w0-rk">
+
+      <div class="sec-div">สถานะ Protocol Risks — อัปเดต ณ Week 1</div>
+
+      <div class="risk-row">
+
+        <div class="rchip rchip-ok">✅ Trylagina — หยุดแล้ว</div>
+
+        <div class="rchip rchip-ok">✅ Minus — หยุดแล้ว</div>
+
+        <div class="rchip rchip-warn">⚠ Special products 9 คน</div>
+
+        <div class="rchip rchip-warn">⚠ Ceiling effect 7 คน</div>
+
+        <div class="rchip rchip-warn">⚠ Expectation mismatch 4 คน</div>
+
+      </div>
+
+      <div class="g2">
+
+        <div class="card">
+
+          <div class="card-title">การใช้ผลิตภัณฑ์ก่อนทดสอบ</div>
+
+          <div class="rt-row"><span class="rt-name">Trylagina (สูตรเดิม)</span><div class="rt-track"><div class="rt-fill" style="width:98%;background:var(--navy)"></div></div><span class="rt-pct">98%</span></div>
+
+          <div class="rt-row"><span class="rt-name">Sunscreen</span><div class="rt-track"><div class="rt-fill" style="width:98%;background:#5B8FC4"></div></div><span class="rt-pct">98%</span></div>
+
+          <div class="rt-row"><span class="rt-name">Special (ครีมอื่น)</span><div class="rt-track"><div class="rt-fill" style="width:23%;background:var(--amber)"></div></div><span class="rt-pct">23%</span></div>
+
+          <div class="rt-row"><span class="rt-name">Serum</span><div class="rt-track"><div class="rt-fill" style="width:21%;background:var(--ink3)"></div></div><span class="rt-pct">21%</span></div>
+
+          <div class="insight ins-teal">Trylagina &amp; Minus บังคับหยุดก่อน Week 1 แล้ว — Validity Score ขึ้นเป็น 76% (+14%)</div>
+
+        </div>
+
+        <div class="card">
+
+          <div class="card-title">Risk Flags (อัปเดต)</div>
+
+          <div class="risk-grid">
+
+            <div class="risk-item" style="background:var(--teal-l)"><div class="risk-title" style="color:var(--teal)">✅ Trylagina — ปิดแล้ว</div><div class="risk-body" style="color:#0F4A35">บังคับหยุดก่อน Week 1</div></div>
+
+            <div class="risk-item" style="background:var(--teal-l)"><div class="risk-title" style="color:var(--teal)">✅ Minus — ปิดแล้ว</div><div class="risk-body" style="color:#0F4A35">บังคับหยุดก่อน Week 1</div></div>
+
+            <div class="risk-item"><div class="risk-title">⚠ Special Products (9 คน)</div><div class="risk-body">ครีมแพทย์ซ้อน — track แยก subgroup</div></div>
+
+            <div class="risk-item"><div class="risk-title">⚠ Ceiling Effect (7 คน)</div><div class="risk-body">Satisfaction 5/5 — ใช้เป็น reference group</div></div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+
+  </div>
+
 </div>
+
+
 
 <!-- ══ WEEK 1 ══ -->
+
 <div class="week-page" id="page-w1">
-  <div class="page-hdr">
-    <div class="page-hdr-inner">
-      <div>
-        <div class="eyebrow">After 7 Days · First Check-in</div>
-        <h1>Week 1 — First Serum Results</h1>
-        <p>ผลหลังใช้ครบ 7 วัน · Law Group · March 2026</p>
-        <div class="hdr-pills">
-          <span class="hpill hpill-g">38 คน ตอบครบ</span>
-          <span class="hpill hpill-a">54 คน In Progress</span>
-          <span class="hpill hpill-b">Compliance 95%</span>
-        </div>
-      </div>
-      <div class="hdr-stat"><div class="hdr-big">87%</div><div class="hdr-sm">รู้สึกผิวเปลี่ยนแปลง<br>แบบสัมผัสได้</div></div>
-    </div>
-  </div>
 
-  <div class="subnav" id="snav-w1">
-    <div class="stab active" onclick="switchTab('w1','ov',this)">ภาพรวม</div>
-    <div class="stab" onclick="switchTab('w1','dl',this)">W0 vs W1 Scores</div>
-    <div class="stab" onclick="switchTab('w1','sf',this)">Safety & Compliance</div>
-  </div>
+  <div class="page-hdr">
 
-  <div class="main">
+    <div class="page-hdr-inner">
 
-    <div class="tab-section active" id="w1-ov">
-      <div class="kpi-grid">
-        <div class="kpi" style="border-top-color:var(--teal)"><div class="kpi-lbl">รู้สึกเปลี่ยนแปลง</div><div class="kpi-val" style="color:var(--teal)">33</div><div class="kpi-sub">87% ของผู้ตอบ</div></div>
-        <div class="kpi" style="border-top-color:var(--navy)"><div class="kpi-lbl">พึงพอใจ (≥ 4)</div><div class="kpi-val" style="color:var(--navy)">13</div><div class="kpi-sub">34% · ผิวดีขึ้นสัมผัสได้</div></div>
-        <div class="kpi" style="border-top-color:var(--gold)"><div class="kpi-lbl">ผลหลักที่เห็น</div><div class="kpi-val" style="color:var(--gold);font-size:18px;padding-top:6px">ชุ่มชื้น</div><div class="kpi-sub">66% ของผู้ตอบระบุ</div></div>
-        <div class="kpi" style="border-top-color:var(--teal)"><div class="kpi-lbl">Compliance 2×/วัน</div><div class="kpi-val" style="color:var(--teal)">95%</div><div class="kpi-sub">36/38 คน</div></div>
-      </div>
-      <div class="g2">
-        <div class="card">
-          <div class="card-title">ระดับความพึงพอใจ Week 1 (n=38)</div>
-          <div class="sat-row"><div class="sat-lbl">⭐⭐⭐⭐⭐ ดีขึ้นมาก ชัดเจน</div><div class="sat-bar-track"><div class="sat-bar-fill" style="width:8%;background:var(--teal)"></div></div><div class="sat-num" style="color:var(--teal)">3</div></div>
-          <div class="sat-row"><div class="sat-lbl">⭐⭐⭐⭐ ดีขึ้น สัมผัสได้</div><div class="sat-bar-track"><div class="sat-bar-fill" style="width:26%;background:var(--navy)"></div></div><div class="sat-num" style="color:var(--navy)">10</div></div>
-          <div class="sat-row"><div class="sat-lbl">⭐⭐⭐ เล็กน้อย ยังไม่ชัด</div><div class="sat-bar-track"><div class="sat-bar-fill" style="width:53%;background:var(--gold)"></div></div><div class="sat-num" style="color:var(--amber)">20</div></div>
-          <div class="sat-row"><div class="sat-lbl">⭐⭐ เหมือนเดิม ยังไม่เห็นผล</div><div class="sat-bar-track"><div class="sat-bar-fill" style="width:11%;background:#D97706"></div></div><div class="sat-num" style="color:#D97706">4</div></div>
-          <div class="sat-row"><div class="sat-lbl">⭐ รู้สึกผิวแย่ลง</div><div class="sat-bar-track"><div class="sat-bar-fill" style="width:3%;background:var(--red)"></div></div><div class="sat-num" style="color:var(--red)">1</div></div>
-          <div class="insight ins-navy">53% อยู่ที่ระดับ 3 "เริ่มรู้สึกแต่ยังไม่ชัด" — เป็น pattern ปกติของ Week 1</div>
-        </div>
-        <div class="card">
-          <div class="card-title">ผลลัพธ์ที่เห็นหลัง 1 สัปดาห์ (Q06)</div>
-          <div class="bar-row"><span class="bar-lbl">ผิวชุ่มชื้น</span><div class="bar-track"><div class="bar-fill" style="width:100%;background:var(--navy)"></div></div><span class="bar-num">25</span></div>
-          <div class="bar-row"><span class="bar-lbl">ผิวเรียบเนียน</span><div class="bar-track"><div class="bar-fill" style="width:56%;background:var(--navy)"></div></div><span class="bar-num">14</span></div>
-          <div class="bar-row"><span class="bar-lbl">ผิวกระจ่างใส</span><div class="bar-track"><div class="bar-fill" style="width:36%;background:var(--teal)"></div></div><span class="bar-num">9</span></div>
-          <div class="bar-row"><span class="bar-lbl">ริ้วรอย</span><div class="bar-track"><div class="bar-fill" style="width:32%;background:var(--teal)"></div></div><span class="bar-num">8</span></div>
-          <div class="bar-row"><span class="bar-lbl">จุดด่างดำ / ฝ้า</span><div class="bar-track"><div class="bar-fill" style="width:20%;background:var(--amber)"></div></div><span class="bar-num">5</span></div>
-          <div class="insight ins-teal">ชุ่มชื้น = benefit ที่เห็นเร็วที่สุด ตรงกับ Support benefit ของ B5 · ริ้วรอย 8 คนเริ่มสังเกตเห็นแล้วใน Week 1</div>
-        </div>
-      </div>
-    </div>
+      <div>
 
-    <div class="tab-section" id="w1-dl">
-      <div class="disclaimer"><strong>หมายเหตุสำคัญ: Scale ต่างกัน — </strong>W0 วัด "ผิวตอนนี้เป็นยังไง" (absolute) · W1 วัด "เปลี่ยนจากก่อนใช้ไหม" (relative) · ตัวเลขที่ดูลดลงไม่ได้หมายความว่าผิวแย่ลง รอ W2–W4 ที่ใช้ scale เดียวกันเพื่อดู trend จริงค่ะ</div>
-      <div class="card" style="margin-bottom:18px">
-        <div class="card-title">W0 Baseline vs W1 (กลุ่มที่ match ได้ n=37 via Customer ID · scale ต่างกัน ดูเพื่อ reference)</div>
-        <div class="delta-row">
-          <div class="delta-lbl">💧 ชุ่มชื้น</div>
-          <div class="delta-bars">
-            <div class="delta-bar-row"><span class="delta-tag">W0</span><div class="delta-track"><div class="delta-fill" style="width:75.6%;background:#C5D8EC"></div></div><span class="delta-num">3.78</span></div>
-            <div class="delta-bar-row"><span class="delta-tag">W1</span><div class="delta-track"><div class="delta-fill" style="width:71.8%;background:#8BA7C8"></div></div><span class="delta-num">3.59</span></div>
-          </div>
-          <div class="delta-val" style="color:var(--amber)">−0.19</div>
-        </div>
-        <div class="delta-row">
-          <div class="delta-lbl">〰 ริ้วรอย</div>
-          <div class="delta-bars">
-            <div class="delta-bar-row"><span class="delta-tag">W0</span><div class="delta-track"><div class="delta-fill" style="width:58.4%;background:#C5D8EC"></div></div><span class="delta-num">2.92</span></div>
-            <div class="delta-bar-row"><span class="delta-tag">W1</span><div class="delta-track"><div class="delta-fill" style="width:58.4%;background:var(--navy)"></div></div><span class="delta-num" style="color:var(--navy)">2.92</span></div>
-          </div>
-          <div class="delta-val" style="color:var(--ink3)">±0.00</div>
-        </div>
-        <div class="delta-row">
-          <div class="delta-lbl">✨ เรียบเนียน</div>
-          <div class="delta-bars">
-            <div class="delta-bar-row"><span class="delta-tag">W0</span><div class="delta-track"><div class="delta-fill" style="width:71.4%;background:#C5D8EC"></div></div><span class="delta-num">3.57</span></div>
-            <div class="delta-bar-row"><span class="delta-tag">W1</span><div class="delta-track"><div class="delta-fill" style="width:62.2%;background:#8BA7C8"></div></div><span class="delta-num">3.11</span></div>
-          </div>
-          <div class="delta-val" style="color:var(--amber)">−0.46</div>
-        </div>
-        <div class="delta-row">
-          <div class="delta-lbl">🌟 กระจ่างใส</div>
-          <div class="delta-bars">
-            <div class="delta-bar-row"><span class="delta-tag">W0</span><div class="delta-track"><div class="delta-fill" style="width:70.8%;background:#C5D8EC"></div></div><span class="delta-num">3.54</span></div>
-            <div class="delta-bar-row"><span class="delta-tag">W1</span><div class="delta-track"><div class="delta-fill" style="width:57.8%;background:#8BA7C8"></div></div><span class="delta-num">2.89</span></div>
-          </div>
-          <div class="delta-val" style="color:var(--amber)">−0.65</div>
-        </div>
-        <div class="delta-row" style="border:none">
-          <div class="delta-lbl">🔸 จุดด่างดำ</div>
-          <div class="delta-bars">
-            <div class="delta-bar-row"><span class="delta-tag">W0</span><div class="delta-track"><div class="delta-fill" style="width:63.8%;background:#C5D8EC"></div></div><span class="delta-num">3.19</span></div>
-            <div class="delta-bar-row"><span class="delta-tag">W1</span><div class="delta-track"><div class="delta-fill" style="width:52.4%;background:#8BA7C8"></div></div><span class="delta-num">2.62</span></div>
-          </div>
-          <div class="delta-val" style="color:var(--amber)">−0.57</div>
-        </div>
-        <div class="insight ins-navy">ริ้วรอย ±0.00 — ยังคงทรงตัว ไม่ลดลง แม้ scale จะต่างกัน สัญญาณ cohort (baseline ต่ำ +1.70) ชี้ว่าสูตรกำลังทำงานในกลุ่มที่ใช่</div>
-        <div class="insight ins-amber" style="margin-top:6px">มิติอื่นที่ดูลดลงส่วนหนึ่งมาจาก scale ต่างกัน (W1 ถาม relative change ซึ่งตอบยากกว่า absolute) รอ W2–W4 เพื่อยืนยัน</div>
-      </div>
-      <div class="g2">
-        <div class="card">
-          <div class="card-title">W1 ชุ่มชื้น — distribution (n=38)</div>
-          <div class="chart-wrap" style="height:185px"><canvas id="w1Moist"></canvas></div>
-        </div>
-        <div class="card">
-          <div class="card-title">W1 ริ้วรอย — distribution (n=38)</div>
-          <div class="chart-wrap" style="height:185px"><canvas id="w1Fine"></canvas></div>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-title">Cohort Insight — ริ้วรอย W1 แยกตาม W0 Baseline</div>
-        <div class="g3" style="margin-bottom:0">
-          <div class="cohort-box" style="background:var(--teal-l);border-color:var(--teal)">
-            <div style="font-size:10px;font-weight:700;color:var(--teal);text-transform:uppercase;letter-spacing:.07em;margin-bottom:4px">Baseline ≤ 2 (n=10)</div>
-            <div style="font-size:28px;font-weight:600;color:var(--teal);line-height:1">3.50</div>
-            <div style="font-size:12px;color:var(--teal);margin-top:2px">+1.70 จาก baseline (1.80)</div>
-            <div style="font-size:11px;color:#0F4A35;margin-top:6px;line-height:1.5">กลุ่มที่มีปัญหาจริง respond ดีที่สุด</div>
-          </div>
-          <div class="cohort-box" style="background:var(--navy-l);border-color:var(--navy)">
-            <div style="font-size:10px;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.07em;margin-bottom:4px">Baseline = 3 (n=20)</div>
-            <div style="font-size:28px;font-weight:600;color:var(--navy);line-height:1">2.70</div>
-            <div style="font-size:12px;color:var(--navy);margin-top:2px">−0.30 จาก baseline (3.00)</div>
-            <div style="font-size:11px;color:#0C2A4A;margin-top:6px;line-height:1.5">กลุ่มกลาง scale effect ส่งผล</div>
-          </div>
-          <div class="cohort-box" style="background:var(--surface2);border-color:var(--ink3)">
-            <div style="font-size:10px;font-weight:700;color:var(--ink3);text-transform:uppercase;letter-spacing:.07em;margin-bottom:4px">Baseline ≥ 4 (n=7)</div>
-            <div style="font-size:28px;font-weight:600;color:var(--ink2);line-height:1">2.71</div>
-            <div style="font-size:12px;color:var(--ink3);margin-top:2px">−1.58 จาก baseline (4.29)</div>
-            <div style="font-size:11px;color:var(--ink3);margin-top:6px;line-height:1.5">Ceiling effect ชัดเจน</div>
-          </div>
-        </div>
-        <div class="insight ins-navy" style="margin-top:14px">กลุ่ม baseline ต่ำ respond ดีที่สุด — ยืนยัน tester segmentation ที่ทำไว้ตั้งแต่ W0</div>
-      </div>
-    </div>
+        <div class="eyebrow">After 7 Days · First Check-in</div>
 
-    <div class="tab-section" id="w1-sf">
-      <div class="kpi-grid" style="grid-template-columns:repeat(3,1fr)">
-        <div class="kpi" style="border-top-color:var(--teal)"><div class="kpi-lbl">ไม่มี Adverse Reaction</div><div class="kpi-val" style="color:var(--teal)">35</div><div class="kpi-sub">92% ของผู้ตอบ</div></div>
-        <div class="kpi" style="border-top-color:var(--amber)"><div class="kpi-lbl">คันเล็กน้อยครั้งแรก</div><div class="kpi-val" style="color:var(--amber)">1</div><div class="kpi-sub">หายไปเองครั้งถัดมา</div></div>
-        <div class="kpi" style="border-top-color:var(--teal)"><div class="kpi-lbl">Compliance 2×/วัน</div><div class="kpi-val" style="color:var(--teal)">95%</div><div class="kpi-sub">36/38 คน</div></div>
-      </div>
-      <div class="g2">
-        <div class="card">
-          <div class="card-title">Watch List — รายงานสัปดาห์แรก</div>
-          <div class="sens-item">✅ คันเล็กน้อยครั้งแรก แต่หายไปเอง ไม่มีผื่น ไม่มีอาการคงอยู่</div>
-          <div class="sens-item">✅ ปกติแพ้เวลาเปลี่ยนครีม ตัวนี้หยิบๆ เล็กน้อย ไม่มีผื่นหรือคัน</div>
-          <div class="sens-item">✅ ปกติโดนฝุ่นแล้วคัน ช่วงนี้ไม่เป็น รู้สึกหน้าแข็งแรงขึ้น</div>
-          <div class="insight ins-teal">Watch List ทั้ง 2 คน ผ่านสัปดาห์แรกได้ปลอดภัย ไม่มีรายใดต้อง exclude</div>
-        </div>
-        <div class="card">
-          <div class="card-title">Compliance</div>
-          <div class="rt-row"><span class="rt-name">เช้า + เย็น</span><div class="rt-track"><div class="rt-fill" style="width:95%;background:var(--teal)"></div></div><span class="rt-pct">95%</span></div>
-          <div class="rt-row"><span class="rt-name">เย็นอย่างเดียว</span><div class="rt-track"><div class="rt-fill" style="width:5%;background:var(--amber)"></div></div><span class="rt-pct">5%</span></div>
-          <div class="insight ins-teal">Compliance 95% สูงมาก — ผลที่ได้ reflect การใช้จริงได้ดี</div>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-title">สรุป Safety Week 1</div>
-        <div class="g3" style="margin:0">
-          <div style="background:var(--teal-l);border-radius:var(--r-sm);padding:14px 16px;border-left:3px solid var(--teal)"><div style="font-size:12px;font-weight:700;color:var(--teal);margin-bottom:5px">✅ ไม่มี Adverse Reaction</div><div style="font-size:12px;color:#0F4A35;line-height:1.6">ไม่มีรายใดรายงานผื่น แพ้ หรืออาการคงอยู่ B5+ ผ่าน safety gate สัปดาห์แรก</div></div>
-          <div style="background:var(--teal-l);border-radius:var(--r-sm);padding:14px 16px;border-left:3px solid var(--teal)"><div style="font-size:12px;font-weight:700;color:var(--teal);margin-bottom:5px">✅ Compliance สูง</div><div style="font-size:12px;color:#0F4A35;line-height:1.6">95% ใช้ครบ 2 ครั้ง/วัน texture และ experience ไม่เป็นอุปสรรค</div></div>
-          <div style="background:var(--amber-l);border-radius:var(--r-sm);padding:14px 16px;border-left:3px solid var(--amber)"><div style="font-size:12px;font-weight:700;color:var(--amber);margin-bottom:5px">⚠ ติดตามต่อ W2</div><div style="font-size:12px;color:#5C3A08;line-height:1.6">Watch List ทั้ง 2 คน ยังควรติดตามต่อ แม้จะผ่านสัปดาห์แรกได้ดี</div></div>
-        </div>
-      </div>
-    </div>
+        <h1>Week 1 — First Serum Results</h1>
 
-  </div>
+        <p>ผลหลังใช้ครบ 7 วัน · Law Group · March 2026</p>
+
+        <div class="hdr-pills">
+
+          <span class="hpill hpill-g">38 คน ตอบครบ</span>
+
+          <span class="hpill hpill-a">54 คน In Progress</span>
+
+          <span class="hpill hpill-b">Compliance 95%</span>
+
+        </div>
+
+      </div>
+
+      <div class="hdr-stat"><div class="hdr-big">87%</div><div class="hdr-sm">รู้สึกผิวเปลี่ยนแปลง<br>แบบสัมผัสได้</div></div>
+
+    </div>
+
+  </div>
+
+
+
+  <div class="subnav" id="snav-w1">
+
+    <div class="stab active" onclick="switchTab('w1','ov',this)">ภาพรวม</div>
+
+    <div class="stab" onclick="switchTab('w1','dl',this)">W0 vs W1 Scores</div>
+
+    <div class="stab" onclick="switchTab('w1','sf',this)">Safety & Compliance</div>
+
+  </div>
+
+
+
+  <div class="main">
+
+
+
+    <div class="tab-section active" id="w1-ov">
+
+      <div class="kpi-grid">
+
+        <div class="kpi" style="border-top-color:var(--teal)"><div class="kpi-lbl">รู้สึกเปลี่ยนแปลง</div><div class="kpi-val" style="color:var(--teal)">33</div><div class="kpi-sub">87% ของผู้ตอบ</div></div>
+
+        <div class="kpi" style="border-top-color:var(--navy)"><div class="kpi-lbl">พึงพอใจ (≥ 4)</div><div class="kpi-val" style="color:var(--navy)">13</div><div class="kpi-sub">34% · ผิวดีขึ้นสัมผัสได้</div></div>
+
+        <div class="kpi" style="border-top-color:var(--gold)"><div class="kpi-lbl">ผลหลักที่เห็น</div><div class="kpi-val" style="color:var(--gold);font-size:18px;padding-top:6px">ชุ่มชื้น</div><div class="kpi-sub">66% ของผู้ตอบระบุ</div></div>
+
+        <div class="kpi" style="border-top-color:var(--teal)"><div class="kpi-lbl">Compliance 2×/วัน</div><div class="kpi-val" style="color:var(--teal)">95%</div><div class="kpi-sub">36/38 คน</div></div>
+
+      </div>
+
+      <div class="g2">
+
+        <div class="card">
+
+          <div class="card-title">ระดับความพึงพอใจ Week 1 (n=38)</div>
+
+          <div class="sat-row"><div class="sat-lbl">⭐⭐⭐⭐⭐ ดีขึ้นมาก ชัดเจน</div><div class="sat-bar-track"><div class="sat-bar-fill" style="width:8%;background:var(--teal)"></div></div><div class="sat-num" style="color:var(--teal)">3</div></div>
+
+          <div class="sat-row"><div class="sat-lbl">⭐⭐⭐⭐ ดีขึ้น สัมผัสได้</div><div class="sat-bar-track"><div class="sat-bar-fill" style="width:26%;background:var(--navy)"></div></div><div class="sat-num" style="color:var(--navy)">10</div></div>
+
+          <div class="sat-row"><div class="sat-lbl">⭐⭐⭐ เล็กน้อย ยังไม่ชัด</div><div class="sat-bar-track"><div class="sat-bar-fill" style="width:53%;background:var(--gold)"></div></div><div class="sat-num" style="color:var(--amber)">20</div></div>
+
+          <div class="sat-row"><div class="sat-lbl">⭐⭐ เหมือนเดิม ยังไม่เห็นผล</div><div class="sat-bar-track"><div class="sat-bar-fill" style="width:11%;background:#D97706"></div></div><div class="sat-num" style="color:#D97706">4</div></div>
+
+          <div class="sat-row"><div class="sat-lbl">⭐ รู้สึกผิวแย่ลง</div><div class="sat-bar-track"><div class="sat-bar-fill" style="width:3%;background:var(--red)"></div></div><div class="sat-num" style="color:var(--red)">1</div></div>
+
+          <div class="insight ins-navy">53% อยู่ที่ระดับ 3 "เริ่มรู้สึกแต่ยังไม่ชัด" — เป็น pattern ปกติของ Week 1</div>
+
+        </div>
+
+        <div class="card">
+
+          <div class="card-title">ผลลัพธ์ที่เห็นหลัง 1 สัปดาห์ (Q06)</div>
+
+          <div class="bar-row"><span class="bar-lbl">ผิวชุ่มชื้น</span><div class="bar-track"><div class="bar-fill" style="width:100%;background:var(--navy)"></div></div><span class="bar-num">25</span></div>
+
+          <div class="bar-row"><span class="bar-lbl">ผิวเรียบเนียน</span><div class="bar-track"><div class="bar-fill" style="width:56%;background:var(--navy)"></div></div><span class="bar-num">14</span></div>
+
+          <div class="bar-row"><span class="bar-lbl">ผิวกระจ่างใส</span><div class="bar-track"><div class="bar-fill" style="width:36%;background:var(--teal)"></div></div><span class="bar-num">9</span></div>
+
+          <div class="bar-row"><span class="bar-lbl">ริ้วรอย</span><div class="bar-track"><div class="bar-fill" style="width:32%;background:var(--teal)"></div></div><span class="bar-num">8</span></div>
+
+          <div class="bar-row"><span class="bar-lbl">จุดด่างดำ / ฝ้า</span><div class="bar-track"><div class="bar-fill" style="width:20%;background:var(--amber)"></div></div><span class="bar-num">5</span></div>
+
+          <div class="insight ins-teal">ชุ่มชื้น = benefit ที่เห็นเร็วที่สุด ตรงกับ Support benefit ของ B5 · ริ้วรอย 8 คนเริ่มสังเกตเห็นแล้วใน Week 1</div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+
+    <div class="tab-section" id="w1-dl">
+
+      <div class="disclaimer"><strong>หมายเหตุสำคัญ: Scale ต่างกัน — </strong>W0 วัด "ผิวตอนนี้เป็นยังไง" (absolute) · W1 วัด "เปลี่ยนจากก่อนใช้ไหม" (relative) · ตัวเลขที่ดูลดลงไม่ได้หมายความว่าผิวแย่ลง รอ W2–W4 ที่ใช้ scale เดียวกันเพื่อดู trend จริงค่ะ</div>
+
+      <div class="card" style="margin-bottom:18px">
+
+        <div class="card-title">W0 Baseline vs W1 (กลุ่มที่ match ได้ n=37 via Customer ID · scale ต่างกัน ดูเพื่อ reference)</div>
+
+        <div class="delta-row">
+
+          <div class="delta-lbl">💧 ชุ่มชื้น</div>
+
+          <div class="delta-bars">
+
+            <div class="delta-bar-row"><span class="delta-tag">W0</span><div class="delta-track"><div class="delta-fill" style="width:75.6%;background:#C5D8EC"></div></div><span class="delta-num">3.78</span></div>
+
+            <div class="delta-bar-row"><span class="delta-tag">W1</span><div class="delta-track"><div class="delta-fill" style="width:71.8%;background:#8BA7C8"></div></div><span class="delta-num">3.59</span></div>
+
+          </div>
+
+          <div class="delta-val" style="color:var(--amber)">−0.19</div>
+
+        </div>
+
+        <div class="delta-row">
+
+          <div class="delta-lbl">〰 ริ้วรอย</div>
+
+          <div class="delta-bars">
+
+            <div class="delta-bar-row"><span class="delta-tag">W0</span><div class="delta-track"><div class="delta-fill" style="width:58.4%;background:#C5D8EC"></div></div><span class="delta-num">2.92</span></div>
+
+            <div class="delta-bar-row"><span class="delta-tag">W1</span><div class="delta-track"><div class="delta-fill" style="width:58.4%;background:var(--navy)"></div></div><span class="delta-num" style="color:var(--navy)">2.92</span></div>
+
+          </div>
+
+          <div class="delta-val" style="color:var(--ink3)">±0.00</div>
+
+        </div>
+
+        <div class="delta-row">
+
+          <div class="delta-lbl">✨ เรียบเนียน</div>
+
+          <div class="delta-bars">
+
+            <div class="delta-bar-row"><span class="delta-tag">W0</span><div class="delta-track"><div class="delta-fill" style="width:71.4%;background:#C5D8EC"></div></div><span class="delta-num">3.57</span></div>
+
+            <div class="delta-bar-row"><span class="delta-tag">W1</span><div class="delta-track"><div class="delta-fill" style="width:62.2%;background:#8BA7C8"></div></div><span class="delta-num">3.11</span></div>
+
+          </div>
+
+          <div class="delta-val" style="color:var(--amber)">−0.46</div>
+
+        </div>
+
+        <div class="delta-row">
+
+          <div class="delta-lbl">🌟 กระจ่างใส</div>
+
+          <div class="delta-bars">
+
+            <div class="delta-bar-row"><span class="delta-tag">W0</span><div class="delta-track"><div class="delta-fill" style="width:70.8%;background:#C5D8EC"></div></div><span class="delta-num">3.54</span></div>
+
+            <div class="delta-bar-row"><span class="delta-tag">W1</span><div class="delta-track"><div class="delta-fill" style="width:57.8%;background:#8BA7C8"></div></div><span class="delta-num">2.89</span></div>
+
+          </div>
+
+          <div class="delta-val" style="color:var(--amber)">−0.65</div>
+
+        </div>
+
+        <div class="delta-row" style="border:none">
+
+          <div class="delta-lbl">🔸 จุดด่างดำ</div>
+
+          <div class="delta-bars">
+
+            <div class="delta-bar-row"><span class="delta-tag">W0</span><div class="delta-track"><div class="delta-fill" style="width:63.8%;background:#C5D8EC"></div></div><span class="delta-num">3.19</span></div>
+
+            <div class="delta-bar-row"><span class="delta-tag">W1</span><div class="delta-track"><div class="delta-fill" style="width:52.4%;background:#8BA7C8"></div></div><span class="delta-num">2.62</span></div>
+
+          </div>
+
+          <div class="delta-val" style="color:var(--amber)">−0.57</div>
+
+        </div>
+
+        <div class="insight ins-navy">ริ้วรอย ±0.00 — ยังคงทรงตัว ไม่ลดลง แม้ scale จะต่างกัน สัญญาณ cohort (baseline ต่ำ +1.70) ชี้ว่าสูตรกำลังทำงานในกลุ่มที่ใช่</div>
+
+        <div class="insight ins-amber" style="margin-top:6px">มิติอื่นที่ดูลดลงส่วนหนึ่งมาจาก scale ต่างกัน (W1 ถาม relative change ซึ่งตอบยากกว่า absolute) รอ W2–W4 เพื่อยืนยัน</div>
+
+      </div>
+
+      <div class="g2">
+
+        <div class="card">
+
+          <div class="card-title">W1 ชุ่มชื้น — distribution (n=38)</div>
+
+          <div class="chart-wrap" style="height:185px"><canvas id="w1Moist"></canvas></div>
+
+        </div>
+
+        <div class="card">
+
+          <div class="card-title">W1 ริ้วรอย — distribution (n=38)</div>
+
+          <div class="chart-wrap" style="height:185px"><canvas id="w1Fine"></canvas></div>
+
+        </div>
+
+      </div>
+
+      <div class="card">
+
+        <div class="card-title">Cohort Insight — ริ้วรอย W1 แยกตาม W0 Baseline</div>
+
+        <div class="g3" style="margin-bottom:0">
+
+          <div class="cohort-box" style="background:var(--teal-l);border-color:var(--teal)">
+
+            <div style="font-size:10px;font-weight:700;color:var(--teal);text-transform:uppercase;letter-spacing:.07em;margin-bottom:4px">Baseline ≤ 2 (n=10)</div>
+
+            <div style="font-size:28px;font-weight:600;color:var(--teal);line-height:1">3.50</div>
+
+            <div style="font-size:12px;color:var(--teal);margin-top:2px">+1.70 จาก baseline (1.80)</div>
+
+            <div style="font-size:11px;color:#0F4A35;margin-top:6px;line-height:1.5">กลุ่มที่มีปัญหาจริง respond ดีที่สุด</div>
+
+          </div>
+
+          <div class="cohort-box" style="background:var(--navy-l);border-color:var(--navy)">
+
+            <div style="font-size:10px;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.07em;margin-bottom:4px">Baseline = 3 (n=20)</div>
+
+            <div style="font-size:28px;font-weight:600;color:var(--navy);line-height:1">2.70</div>
+
+            <div style="font-size:12px;color:var(--navy);margin-top:2px">−0.30 จาก baseline (3.00)</div>
+
+            <div style="font-size:11px;color:#0C2A4A;margin-top:6px;line-height:1.5">กลุ่มกลาง scale effect ส่งผล</div>
+
+          </div>
+
+          <div class="cohort-box" style="background:var(--surface2);border-color:var(--ink3)">
+
+            <div style="font-size:10px;font-weight:700;color:var(--ink3);text-transform:uppercase;letter-spacing:.07em;margin-bottom:4px">Baseline ≥ 4 (n=7)</div>
+
+            <div style="font-size:28px;font-weight:600;color:var(--ink2);line-height:1">2.71</div>
+
+            <div style="font-size:12px;color:var(--ink3);margin-top:2px">−1.58 จาก baseline (4.29)</div>
+
+            <div style="font-size:11px;color:var(--ink3);margin-top:6px;line-height:1.5">Ceiling effect ชัดเจน</div>
+
+          </div>
+
+        </div>
+
+        <div class="insight ins-navy" style="margin-top:14px">กลุ่ม baseline ต่ำ respond ดีที่สุด — ยืนยัน tester segmentation ที่ทำไว้ตั้งแต่ W0</div>
+
+      </div>
+
+    </div>
+
+
+
+    <div class="tab-section" id="w1-sf">
+
+      <div class="kpi-grid" style="grid-template-columns:repeat(3,1fr)">
+
+        <div class="kpi" style="border-top-color:var(--teal)"><div class="kpi-lbl">ไม่มี Adverse Reaction</div><div class="kpi-val" style="color:var(--teal)">35</div><div class="kpi-sub">92% ของผู้ตอบ</div></div>
+
+        <div class="kpi" style="border-top-color:var(--amber)"><div class="kpi-lbl">คันเล็กน้อยครั้งแรก</div><div class="kpi-val" style="color:var(--amber)">1</div><div class="kpi-sub">หายไปเองครั้งถัดมา</div></div>
+
+        <div class="kpi" style="border-top-color:var(--teal)"><div class="kpi-lbl">Compliance 2×/วัน</div><div class="kpi-val" style="color:var(--teal)">95%</div><div class="kpi-sub">36/38 คน</div></div>
+
+      </div>
+
+      <div class="g2">
+
+        <div class="card">
+
+          <div class="card-title">Watch List — รายงานสัปดาห์แรก</div>
+
+          <div class="sens-item">✅ คันเล็กน้อยครั้งแรก แต่หายไปเอง ไม่มีผื่น ไม่มีอาการคงอยู่</div>
+
+          <div class="sens-item">✅ ปกติแพ้เวลาเปลี่ยนครีม ตัวนี้หยิบๆ เล็กน้อย ไม่มีผื่นหรือคัน</div>
+
+          <div class="sens-item">✅ ปกติโดนฝุ่นแล้วคัน ช่วงนี้ไม่เป็น รู้สึกหน้าแข็งแรงขึ้น</div>
+
+          <div class="insight ins-teal">Watch List ทั้ง 2 คน ผ่านสัปดาห์แรกได้ปลอดภัย ไม่มีรายใดต้อง exclude</div>
+
+        </div>
+
+        <div class="card">
+
+          <div class="card-title">Compliance</div>
+
+          <div class="rt-row"><span class="rt-name">เช้า + เย็น</span><div class="rt-track"><div class="rt-fill" style="width:95%;background:var(--teal)"></div></div><span class="rt-pct">95%</span></div>
+
+          <div class="rt-row"><span class="rt-name">เย็นอย่างเดียว</span><div class="rt-track"><div class="rt-fill" style="width:5%;background:var(--amber)"></div></div><span class="rt-pct">5%</span></div>
+
+          <div class="insight ins-teal">Compliance 95% สูงมาก — ผลที่ได้ reflect การใช้จริงได้ดี</div>
+
+        </div>
+
+      </div>
+
+      <div class="card">
+
+        <div class="card-title">สรุป Safety Week 1</div>
+
+        <div class="g3" style="margin:0">
+
+          <div style="background:var(--teal-l);border-radius:var(--r-sm);padding:14px 16px;border-left:3px solid var(--teal)"><div style="font-size:12px;font-weight:700;color:var(--teal);margin-bottom:5px">✅ ไม่มี Adverse Reaction</div><div style="font-size:12px;color:#0F4A35;line-height:1.6">ไม่มีรายใดรายงานผื่น แพ้ หรืออาการคงอยู่ B5+ ผ่าน safety gate สัปดาห์แรก</div></div>
+
+          <div style="background:var(--teal-l);border-radius:var(--r-sm);padding:14px 16px;border-left:3px solid var(--teal)"><div style="font-size:12px;font-weight:700;color:var(--teal);margin-bottom:5px">✅ Compliance สูง</div><div style="font-size:12px;color:#0F4A35;line-height:1.6">95% ใช้ครบ 2 ครั้ง/วัน texture และ experience ไม่เป็นอุปสรรค</div></div>
+
+          <div style="background:var(--amber-l);border-radius:var(--r-sm);padding:14px 16px;border-left:3px solid var(--amber)"><div style="font-size:12px;font-weight:700;color:var(--amber);margin-bottom:5px">⚠ ติดตามต่อ W2</div><div style="font-size:12px;color:#5C3A08;line-height:1.6">Watch List ทั้ง 2 คน ยังควรติดตามต่อ แม้จะผ่านสัปดาห์แรกได้ดี</div></div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+
+  </div>
+
 </div>
 
+
+
 <script>
+
 Chart.defaults.font.family="'Sarabun',sans-serif";
+
 Chart.defaults.font.size=11;
+
 Chart.defaults.color="#9C9189";
 
+
+
 function switchWeek(wk,el){
-  document.querySelectorAll('.week-page').forEach(p=>p.classList.remove('active'));
-  document.querySelectorAll('.wtab').forEach(t=>t.classList.remove('active'));
-  document.getElementById('page-'+wk).classList.add('active');
-  el.classList.add('active');
+
+  document.querySelectorAll('.week-page').forEach(p=>p.classList.remove('active'));
+
+  document.querySelectorAll('.wtab').forEach(t=>t.classList.remove('active'));
+
+  document.getElementById('page-'+wk).classList.add('active');
+
+  el.classList.add('active');
+
 }
+
 function switchTab(wk,tab,el){
-  const pre=wk+'-';
-  document.querySelectorAll('[id^="'+pre+'"]').forEach(s=>s.classList.remove('active'));
-  document.querySelectorAll('#snav-'+wk+' .stab').forEach(t=>t.classList.remove('active'));
-  document.getElementById(pre+tab).classList.add('active');
-  el.classList.add('active');
+
+  const pre=wk+'-';
+
+  document.querySelectorAll('[id^="'+pre+'"]').forEach(s=>s.classList.remove('active'));
+
+  document.querySelectorAll('#snav-'+wk+' .stab').forEach(t=>t.classList.remove('active'));
+
+  document.getElementById(pre+tab).classList.add('active');
+
+  el.classList.add('active');
+
 }
+
+
 
 // W0 Pie
+
 new Chart(document.getElementById('w0Pie'),{type:'doughnut',data:{labels:['ผิวผสม','ผิวมัน','ผิวธรรมดา','ผิวแห้ง'],datasets:[{data:[22,7,6,6],backgroundColor:['#1C3A5E','#1A6B55','#B8925A','#7B6FA0'],borderWidth:3,borderColor:'#fff',hoverOffset:4}]},options:{responsive:true,maintainAspectRatio:false,cutout:'64%',plugins:{legend:{display:false}}}});
 
+
+
 // W0 Satisfaction
+
 new Chart(document.getElementById('w0Sat'),{type:'bar',data:{labels:['1','2','3','4','5'],datasets:[{data:[1,1,8,24,7],backgroundColor:['#9B2C2C','#D07070','#B8925A','#1A6B55','#0F4A35'],borderRadius:5,borderSkipped:false}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{display:false}},y:{grid:{color:'#F2EFE9'},ticks:{stepSize:5}}}}});
 
+
+
 // W0 Segment
+
 new Chart(document.getElementById('w0Seg'),{type:'doughnut',data:{labels:['Standard','Handle with Care','Ideal Tester','Watch List'],datasets:[{data:[25,9,5,2],backgroundColor:['#D0CCC5','#C87070','#B8925A','#1A6B55'],borderWidth:3,borderColor:'#fff',hoverOffset:4}]},options:{responsive:true,maintainAspectRatio:false,cutout:'62%',plugins:{legend:{display:false}}}});
 
+
+
 // W0 Score rows
+
 const scores=[{e:'💧 ชุ่มชื้น',v:3.78,c:'var(--navy)',pct:75.6},{e:'✨ เรียบเนียน',v:3.59,c:'var(--navy)',pct:71.8},{e:'🌟 กระจ่างใส',v:3.59,c:'var(--navy)',pct:71.8},{e:'🔸 จุดด่างดำ',v:3.17,c:'var(--navy)',pct:63.4},{e:'〰 ริ้วรอย',v:2.88,c:'var(--red)',pct:57.6}];
+
 const sr=document.getElementById('w0ScoreRows');
+
 scores.forEach(s=>{
-  sr.innerHTML+=`<div class="delta-row"><div class="delta-lbl">${s.e}</div><div class="delta-bars"><div class="delta-bar-row"><div class="delta-track"><div class="delta-fill" style="width:${s.pct}%;background:${s.c}"></div></div><span class="delta-num" style="color:${s.c};font-weight:700">${s.v.toFixed(2)}</span></div></div><div></div></div>`;
+
+  sr.innerHTML+=`<div class="delta-row"><div class="delta-lbl">${s.e}</div><div class="delta-bars"><div class="delta-bar-row"><div class="delta-track"><div class="delta-fill" style="width:${s.pct}%;background:${s.c}"></div></div><span class="delta-num" style="color:${s.c};font-weight:700">${s.v.toFixed(2)}</span></div></div><div></div></div>`;
+
 });
 
+
+
 // W0 Heatmap
+
 const hd=[{l:'ผิวธรรมดา',s:[3.83,4.00,3.83,3.67,3.33]},{l:'ผิวผสม',s:[3.64,3.50,3.64,2.94,3.05]},{l:'ผิวมัน',s:[4.29,3.43,3.43,3.40,2.14]},{l:'ผิวแห้ง',s:[3.67,3.67,3.33,3.17,2.67]}];
+
 function hc(v){if(v<2.5)return{bg:'#FDECEA',c:'#7F1D1D'};if(v<3.0)return{bg:'#FDEFD0',c:'#633806'};if(v<3.5)return{bg:'#DBEAFE',c:'#1e3a5f'};if(v<4.0)return{bg:'#1C3A5E',c:'#fff'};return{bg:'#0F2942',c:'#fff'};}
+
 const tb=document.getElementById('heatBody');
+
 hd.forEach(r=>{const tr=document.createElement('tr');tr.innerHTML=`<td class="row-lbl">${r.l}</td>`+r.s.map(v=>{const c=hc(v);return`<td style="background:${c.bg};color:${c.c}">${v.toFixed(2)}</td>`}).join('');tb.appendChild(tr);});
 
+
+
 // W1 Moist
+
 new Chart(document.getElementById('w1Moist'),{type:'bar',data:{labels:['2\nเหมือนเดิม','3\nเล็กน้อย','4\nสัมผัสได้','5\nชัดเจน'],datasets:[{data:[5,11,16,6],backgroundColor:['#E5E0D8','#B8CEEA','#1C3A5E','#0F2942'],borderRadius:5,borderSkipped:false}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{display:false},ticks:{font:{size:10}}},y:{grid:{color:'#F2EFE9'},ticks:{stepSize:5}}}}});
 
+
+
 // W1 Fine
+
 new Chart(document.getElementById('w1Fine'),{type:'bar',data:{labels:['2\nเหมือนเดิม','3\nจางเล็กน้อย','4\nสังเกตได้','5\nชัดเจน'],datasets:[{data:[15,11,11,1],backgroundColor:['#E5E0D8','#9AD4C3','#1A6B55','#0F4A35'],borderRadius:5,borderSkipped:false}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{display:false},ticks:{font:{size:10}}},y:{grid:{color:'#F2EFE9'},ticks:{stepSize:5}}}}});
+
 </script>
+
 </body>
-</html>   
+
+</html> 
