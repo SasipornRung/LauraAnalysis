@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+
+<html lang="th">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Product Evidence Pyramid — L'uara Pro B5+</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600&family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+
+:root {
+
+  --bg: #F6F3EE;
+
+  --surface: #FFFFFF;
+
+  --surface2: #F0EDE8;
+
+  --ink: #1C1917;
+
+  --ink2: #57534E;
+
+  --ink3: #A8A29E;
+
+  --border: #E5E0D8;
+
+  --navy: #1F4E79;
+
+  --green: #1D7A5A;
+
+  --blue: #185FA5;
+
+  --blue-l: #EBF3FB;
+
+  --blue-t: #1D5FA6;
+
+  --green-l: #E6F4EF;
+
+  --amber-l: #FDF3E3;
+
+  --amber-t: #B8700F;
+
+  --gray-l: #F0EDE8;
+
+  --gray-t: #57534E;
+
+  --info-l: #EBF3FB;
+
+  --info-t: #1A5276;
+
+  --success-l: #E6F4EF;
+
+  --success-t: #1D7A5A;
+
+  --warn-l: #FDF3E3;
+
+  --warn-t: #B8700F;
+
+  --r-md: 8px;
+
+  --r-lg: 12px;
+
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+
+  font-family: 'Sarabun', sans-serif;
+
+  background: var(--bg);
+
+  color: var(--ink);
+
+  font-size: 14px;
+
+  line-height: 1.65;
+
+  min-height: 100vh;
+
+}
+
+
+
+/* ── Header ── */
+
+.hdr {
+
+  background: var(--navy);
+
+  color: #fff;
+
+  padding: 36px 52px 32px;
+
+  display: grid;
+
+  grid-template-columns: 1fr auto;
+
+  gap: 32px;
+
+  align-items: end;
+
+}
+
+.eyebrow {
+
+  font-size: 11px; font-weight: 600;
+
+  letter-spacing: .12em; text-transform: uppercase;
+
+  color: #B8956A; margin-bottom: 8px;
+
+}
+
+.hdr h1 {
+
+  font-family: 'Playfair Display', serif;
+
+  font-size: 28px; font-weight: 400; line-height: 1.2;
+
+}
+
+.hdr p { font-size: 13px; color: rgba(255,255,255,.45); margin-top: 4px; }
+
+.hdr-right { text-align: right; }
+
+.hdr-right .big { font-size: 13px; color: rgba(255,255,255,.5); line-height: 1.6; }
+
+
+
+/* ── Wrap ── */
+
+.wrap { max-width: 980px; margin: 0 auto; padding: 36px 52px 72px; }
+
+
+
+/* ── Intro ── */
+
+.intro {
+
+  background: var(--surface);
+
+  border-radius: var(--r-lg);
+
+  padding: 20px 24px;
+
+  border: 0.5px solid var(--border);
+
+  margin-bottom: 28px;
+
+  display: grid;
+
+  grid-template-columns: 1fr 1fr;
+
+  gap: 20px;
+
+}
+
+.intro-col p { font-size: 13px; color: var(--ink2); line-height: 1.7; }
+
+.intro-col strong { color: var(--ink); }
+
+
+
+/* ── Pyramid rows ── */
+
+.pyr-section { margin-bottom: 28px; }
+
+.pyr-row {
+
+  display: flex;
+
+  align-items: stretch;
+
+  gap: 0;
+
+  margin-bottom: 4px;
+
+  cursor: pointer;
+
+}
+
+.pyr-trap {
+
+  clip-path: polygon(var(--cl) 0%, var(--cr) 0%, 100% 100%, 0% 100%);
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  flex: 1;
+
+  min-height: 56px;
+
+  transition: filter .15s;
+
+  position: relative;
+
+}
+
+.pyr-trap:hover { filter: brightness(0.92); }
+
+.pyr-label {
+
+  font-size: 13px;
+
+  font-weight: 500;
+
+  text-align: center;
+
+  padding: 0 8px;
+
+  line-height: 1.35;
+
+  pointer-events: none;
+
+}
+
+.pyr-side {
+
+  width: 200px;
+
+  flex-shrink: 0;
+
+  display: flex;
+
+  align-items: center;
+
+  padding: 0 0 0 16px;
+
+}
+
+.pyr-current-tag {
+
+  font-size: 11px; font-weight: 600;
+
+  color: var(--blue-t);
+
+  background: var(--blue-l);
+
+  border-radius: 20px;
+
+  padding: 2px 10px;
+
+  margin-left: 6px;
+
+  display: inline-block;
+
+}
+
+
+
+/* ── Status badges ── */
+
+.badge {
+
+  display: inline-block;
+
+  font-size: 11px; font-weight: 600;
+
+  padding: 3px 10px;
+
+  border-radius: 20px;
+
+}
+
+.badge-done    { background: var(--success-l); color: var(--success-t); }
+
+.badge-active  { background: var(--info-l);    color: var(--info-t); }
+
+.badge-next    { background: var(--warn-l);    color: var(--warn-t); }
+
+.badge-future  { background: var(--gray-l);    color: var(--gray-t); }
+
+
+
+/* ── Detail panel ── */
+
+.detail-panel {
+
+  background: var(--surface);
+
+  border: 0.5px solid var(--border);
+
+  border-radius: var(--r-lg);
+
+  padding: 22px 26px;
+
+  margin-top: 8px;
+
+  display: none;
+
+  animation: fadeUp .2s ease both;
+
+}
+
+.detail-panel.open { display: block; }
+
+@keyframes fadeUp {
+
+  from { opacity: 0; transform: translateY(6px); }
+
+  to   { opacity: 1; transform: translateY(0); }
+
+}
+
+.detail-head {
+
+  display: flex; align-items: center; gap: 10px;
+
+  margin-bottom: 16px;
+
+}
+
+.detail-title { font-size: 16px; font-weight: 600; }
+
+.detail-grid {
+
+  display: grid;
+
+  grid-template-columns: 1fr 1fr;
+
+  gap: 18px;
+
+  margin-bottom: 16px;
+
+}
+
+.detail-section-label {
+
+  font-size: 10px; font-weight: 700;
+
+  text-transform: uppercase; letter-spacing: .08em;
+
+  color: var(--ink3); margin-bottom: 5px;
+
+}
+
+.detail-body { font-size: 13px; color: var(--ink2); line-height: 1.7; }
+
+.detail-laura {
+
+  padding-top: 14px;
+
+  border-top: 0.5px solid var(--border);
+
+}
+
+.detail-action {
+
+  background: var(--info-l);
+
+  border-radius: var(--r-md);
+
+  padding: 8px 14px;
+
+  font-size: 12px;
+
+  color: var(--info-t);
+
+  margin-top: 10px;
+
+}
+
+
+
+/* ── Legend ── */
+
+.legend {
+
+  display: flex; gap: 18px; flex-wrap: wrap;
+
+  padding: 14px 0 0;
+
+  border-top: 0.5px solid var(--border);
+
+  margin-top: 4px;
+
+}
+
+.leg-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--ink2); }
+
+.leg-dot { width: 10px; height: 10px; border-radius: 3px; flex-shrink: 0; }
+
+
+
+/* ── Bottom note ── */
+
+.bottom-note {
+
+  background: var(--navy);
+
+  color: #fff;
+
+  border-radius: var(--r-lg);
+
+  padding: 22px 28px;
+
+  margin-top: 32px;
+
+  display: grid;
+
+  grid-template-columns: 1fr 1fr 1fr;
+
+  gap: 20px;
+
+}
+
+.bn-item { }
+
+.bn-num { font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 400; color: #B8956A; line-height: 1; margin-bottom: 4px; }
+
+.bn-lbl { font-size: 12px; color: rgba(255,255,255,.5); }
+
+
+
+/* ── Footer ── */
+
+footer {
+
+  border-top: 0.5px solid var(--border);
+
+  padding: 16px 52px;
+
+  display: flex;
+
+  justify-content: space-between;
+
+  font-size: 11px;
+
+  color: var(--ink3);
+
+}
+
+
+
+@media (max-width: 700px) {
+
+  .hdr { padding: 24px 20px; grid-template-columns: 1fr; }
+
+  .wrap { padding: 24px 20px 48px; }
+
+  .intro, .detail-grid, .bottom-note { grid-template-columns: 1fr; }
+
+  .pyr-side { width: 120px; }
+
+  footer { flex-direction: column; gap: 4px; padding: 14px 20px; }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+
+
+<div class="hdr">
+
+  <div>
+
+    <div class="eyebrow">Product Evidence Framework</div>
+
+    <h1>Product Evidence Pyramid<br>L'uara Pro B5+</h1>
+
+    <p>ระดับความน่าเชื่อถือของ evidence — Week 0–1 Status</p>
+
+  </div>
+
+  <div class="hdr-right">
+
+    <div class="big">
+
+      "ลูกค้าบอกว่าดี"<br>ไม่ใช่ proof<br>แต่เป็นจุดเริ่มต้น
+
+    </div>
+
+  </div>
+
+</div>
+
+
+
+<div class="wrap">
+
+
+
+  <div class="intro">
+
+    <div class="intro-col">
+
+      <p><strong>ปัญหาที่ framework นี้แก้:</strong> ในองค์กรส่วนใหญ่ PM / Marketing / R&D มักพูดว่า "ลูกค้าบอกว่าดี" แล้วถือว่าเป็น proof เพียงพอ — แต่จริงๆ มันคือ Layer 1 เท่านั้น ยังมีอีก 5 ระดับที่หลักฐานแข็งแกร่งกว่า</p>
+
+    </div>
+
+    <div class="intro-col">
+
+      <p><strong>วิธีใช้ pyramid นี้:</strong> ยิ่ง layer สูง หลักฐานยิ่งแข็ง ก่อนตัดสินใจ launch / claim / invest ให้ถามว่า "เราอยู่ layer ไหน?" และ "เพียงพอสำหรับการตัดสินใจนี้ไหม?"</p>
+
+    </div>
+
+  </div>
+
+
+
+  <div class="pyr-section" id="pyramid-container"></div>
+
+
+
+  <div class="legend">
+
+    <div class="leg-item"><div class="leg-dot" style="background:var(--success-l);border:1px solid var(--success-t)"></div>เสร็จแล้ว</div>
+
+    <div class="leg-item"><div class="leg-dot" style="background:var(--info-l);border:1px solid var(--info-t)"></div>กำลังทำอยู่</div>
+
+    <div class="leg-item"><div class="leg-dot" style="background:var(--warn-l);border:1px solid var(--warn-t)"></div>ขั้นถัดไป</div>
+
+    <div class="leg-item"><div class="leg-dot" style="background:var(--gray-l);border:1px solid var(--gray-t)"></div>อนาคต</div>
+
+    <div class="leg-item"><div class="leg-dot" style="background:var(--blue-l);border:1px solid var(--blue-t)"></div>ตำแหน่งปัจจุบัน</div>
+
+  </div>
+
+
+
+  <div class="bottom-note">
+
+    <div class="bn-item">
+
+      <div class="bn-num">76%</div>
+
+      <div class="bn-lbl">Test Validity Score<br>หลัง washout</div>
+
+    </div>
+
+    <div class="bn-item">
+
+      <div class="bn-num">L3–L5</div>
+
+      <div class="bn-lbl">Layer ที่ทำอยู่ตอนนี้<br>พร้อมกัน</div>
+
+    </div>
+
+    <div class="bn-item">
+
+      <div class="bn-num">W4</div>
+
+      <div class="bn-lbl">จุดตัดสินใจ<br>launch / no launch</div>
+
+    </div>
+
+  </div>
+
+
+
+</div>
+
+
+
+<footer>
+
+  <span>Product Evidence Pyramid · L'uara Pro B5+ · Law Group</span>
+
+  <span>คลิกแต่ละ layer เพื่อดูรายละเอียด</span>
+
+</footer>
+
+
+
+<script>
+
+const layers = [
+
+  {
+
+    id: 6,
+
+    label: "Product Truth",
+
+    sublabel: "Repeat purchase",
+
+    status: "future",
+
+    statusText: "อนาคต",
+
+    cl: "30%", cr: "70%",
+
+    fill: "#6B6B68", textColor: "#fff",
+
+    current: false,
+
+    what: "พฤติกรรมจริงของลูกค้า — ซื้อซ้ำ, willingness to pay, NPS จากการใช้จริง",
+
+    why: "หลักฐานแข็งที่สุด เพราะเงินคือ commitment จริง ไม่ใช่แค่ความรู้สึก ไม่มี perception bias",
+
+    lauraStatus: "ยังไม่มีข้อมูล — ต้องรอหลัง commercial launch",
+
+    action: null
+
+  },
+
+  {
+
+    id: 5,
+
+    label: "Predictive Evidence",
+
+    sublabel: "Success probability",
+
+    status: "active",
+
+    statusText: "กำลังทำอยู่",
+
+    cl: "22%", cr: "78%",
+
+    fill: "#185FA5", textColor: "#fff",
+
+    current: true,
+
+    what: "ใช้ baseline + satisfaction + expectation + sensitivity ทำนาย probability of improvement ก่อน Week 4 ได้เลย",
+
+    why: "ช่วย detect false negative ล่วงหน้า ถ้า Week 4 แย่ เราจะรู้ว่าเป็นเพราะ product หรือ tester pool",
+
+    lauraStatus: "Success Predictor รัน W0 แล้ว — 7 High / 30 Moderate / 4 Weak · กำลัง validate กับ W1 data ว่า High signal group improve จริงไหม",
+
+    action: "เปรียบเทียบ W1 satisfaction ระหว่าง High signal vs Weak signal group"
+
+  },
+
+  {
+
+    id: 4,
+
+    label: "Cohort Evidence",
+
+    sublabel: "Segment performance",
+
+    status: "active",
+
+    statusText: "กำลังทำอยู่",
+
+    cl: "15%", cr: "85%",
+
+    fill: "#1D5FA6", textColor: "#fff",
+
+    current: true,
+
+    what: "ดูว่า subgroup ไหน improve มากที่สุด เช่น ผิวแห้ง vs ผิวมัน หรือ fine lines baseline ต่ำ vs สูง",
+
+    why: "เปลี่ยน 'product ดี' เป็น 'product ดีกับใคร' — ข้อมูลนี้ใช้ทำ targeting, positioning, และ claim ที่แม่นยำได้เลย",
+
+    lauraStatus: "ผิวมัน fine lines baseline ต่ำสุด (2.14) · ผิวแห้ง satisfaction ต่ำสุด (3.50) — รอ W2–W4 เพื่อดู improvement pattern แยก segment",
+
+    action: "track ริ้วรอย improvement แยกตาม baseline score (≤2 vs ≥3) ทุก week"
+
+  },
+
+  {
+
+    id: 3,
+
+    label: "Controlled Testing",
+
+    sublabel: "Bias detection",
+
+    status: "done",
+
+    statusText: "เสร็จแล้ว",
+
+    cl: "8%", cr: "92%",
+
+    fill: "#1D7A5A", textColor: "#fff",
+
+    current: true,
+
+    what: "มี baseline, tester segmentation, bias detection — expectation mismatch, ceiling effect, confounding",
+
+    why: "ทำให้ผลที่ได้น่าเชื่อถือพอจะอ้างอิงได้ ต่างจาก survey ธรรมดาที่ไม่รู้ว่า result skewed ไหม",
+
+    lauraStatus: "Validity Score 76% · Trylagina/Minus washout เสร็จ · re-brief 4 คน expectation mismatch · 9 คน special products ยังต้องติดตาม",
+
+    action: null
+
+  },
+
+  {
+
+    id: 2,
+
+    label: "Structured Feedback",
+
+    sublabel: "Survey + tracking",
+
+    status: "done",
+
+    statusText: "เสร็จแล้ว",
+
+    cl: "0%", cr: "100%",
+
+    fill: "#2D9675", textColor: "#fff",
+
+    current: false,
+
+    what: "มีระบบ survey สัปดาห์ละครั้ง วัด 5 dimensions ทั้ง W0–W4 พร้อม score tracking",
+
+    why: "เริ่มมีตัวเลขที่ track change ได้ แต่ยังมี perception bias เพราะเป็น self-report ไม่มี baseline control",
+
+    lauraStatus: "W0 (n=41) และ W1 (n=38) เสร็จแล้ว · ริ้วรอย W1=2.95 vs W0=2.88 (+0.07) · 87% รู้สึกผิวเปลี่ยนแปลงแบบสัมผัสได้",
+
+    action: "รอ W2 เพื่อดู trend ที่ชัดขึ้น"
+
+  },
+
+  {
+
+    id: 1,
+
+    label: "Raw Perception",
+
+    sublabel: "Reviews, opinions",
+
+    status: "done",
+
+    statusText: "ผ่านมาแล้ว",
+
+    cl: "0%", cr: "100%",
+
+    fill: "#3DAB87", textColor: "#fff",
+
+    current: false,
+
+    what: "ลูกค้าบอกว่าดี / รีวิวทั่วไป / ความรู้สึกหลังลอง ไม่มีโครงสร้าง ไม่มี baseline",
+
+    why: "หลักฐานอ่อนที่สุด — perception bias สูงมาก ไม่รู้ว่าเทียบกับอะไร คนที่พูดดีอาจเป็นกลุ่มที่ชอบอยู่แล้ว",
+
+    lauraStatus: "L'uara ข้ามขึ้นมาอยู่เหนือ layer นี้ตั้งแต่แรก — มี structured feedback ตั้งแต่ W0 ไม่ได้พึ่งแค่ review",
+
+    action: null
+
+  }
+
+];
+
+
+
+const badgeClass = { done: "badge-done", active: "badge-active", next: "badge-next", future: "badge-future" };
+
+let openId = null;
+
+
+
+function render() {
+
+  const container = document.getElementById("pyramid-container");
+
+  container.innerHTML = "";
+
+
+
+  [...layers].reverse().forEach(layer => {
+
+    const row = document.createElement("div");
+
+    row.className = "pyr-row";
+
+
+
+    const trap = document.createElement("div");
+
+    trap.className = "pyr-trap";
+
+    trap.style.setProperty("--cl", layer.cl);
+
+    trap.style.setProperty("--cr", layer.cr);
+
+    trap.style.background = layer.fill;
+
+
+
+    const lbl = document.createElement("div");
+
+    lbl.className = "pyr-label";
+
+    lbl.style.color = layer.textColor;
+
+    lbl.innerHTML = `${layer.label}<br><span style="font-size:11px;opacity:.7">${layer.sublabel}</span>`;
+
+    if (layer.current) {
+
+      lbl.innerHTML += `<span class="pyr-current-tag">ตอนนี้</span>`;
+
+    }
+
+    trap.appendChild(lbl);
+
+
+
+    const side = document.createElement("div");
+
+    side.className = "pyr-side";
+
+    side.innerHTML = `<span class="badge ${badgeClass[layer.status]}">${layer.statusText}</span>`;
+
+
+
+    row.appendChild(trap);
+
+    row.appendChild(side);
+
+
+
+    const detail = document.createElement("div");
+
+    detail.className = "detail-panel";
+
+    detail.id = `detail-${layer.id}`;
+
+    detail.innerHTML = `
+
+      <div class="detail-head">
+
+        <div class="detail-title">Layer ${layer.id} — ${layer.label}</div>
+
+        <span class="badge ${badgeClass[layer.status]}">${layer.statusText}</span>
+
+      </div>
+
+      <div class="detail-grid">
+
+        <div>
+
+          <div class="detail-section-label">คืออะไร</div>
+
+          <div class="detail-body">${layer.what}</div>
+
+        </div>
+
+        <div>
+
+          <div class="detail-section-label">ทำไมสำคัญ</div>
+
+          <div class="detail-body">${layer.why}</div>
+
+        </div>
+
+      </div>
+
+      <div class="detail-laura">
+
+        <div class="detail-section-label">L'uara Pro B5+ ตอนนี้</div>
+
+        <div class="detail-body">${layer.lauraStatus}</div>
+
+        ${layer.action ? `<div class="detail-action">→ Next action: ${layer.action}</div>` : ""}
+
+      </div>
+
+    `;
+
+
+
+    row.addEventListener("click", () => {
+
+      const isOpen = detail.classList.contains("open");
+
+      document.querySelectorAll(".detail-panel").forEach(d => d.classList.remove("open"));
+
+      if (!isOpen) {
+
+        detail.classList.add("open");
+
+        detail.scrollIntoView({ behavior: "smooth", block: "nearest" });
+
+      }
+
+    });
+
+
+
+    container.appendChild(row);
+
+    container.appendChild(detail);
+
+  });
+
+}
+
+
+
+render();
+
+</script>
+
+</body>
+
+</html>
