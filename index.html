@@ -250,12 +250,39 @@ table.heat td.row-lbl{text-align:right;color:var(--ink2);font-weight:400;padding
           <div class="bar-row"><span class="bar-lbl">ชุ่มชื้น</span><div class="bar-track"><div class="bar-fill" style="width:17%;background:var(--amber)"></div></div><span class="bar-num">3</span></div>
           <div class="insight ins-navy">80% ของกลุ่มคาดหวังให้ริ้วรอยลดลง — align กับ product direction</div>
         </div>
-        <div class="card">
-          <div class="card-title">Tips : ปัญหาที่กังวล ไม่เท่ากับ สิ่งที่คาดหวัง </div>
-         
-      </div>
-    </div>
+       <div class="card">
+  <div class="card-title">⚠ Tips : ความกังวล ≠ ความคาดหวัง</div>
 
+  <p style="font-size:12px;color:var(--ink2);margin-bottom:14px;line-height:1.7">
+    สองสิ่งนี้มาจากคนละ layer ของจิตวิทยาผู้บริโภค
+  </p>
+
+  <div style="display:grid;grid-template-columns:1fr auto 1fr;gap:0;margin-bottom:16px;align-items:stretch">
+    <div style="background:var(--navy-l);border-radius:var(--r-sm) 0 0 var(--r-sm);padding:14px 16px;border:1px solid rgba(28,58,94,0.15)">
+      <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--navy);margin-bottom:6px">ความกังวล</div>
+      <div style="font-size:12px;color:#0C2A4A;line-height:1.6">สิ่งที่รู้สึกกับผิว<br><em>ตอนนี้</em><br><br>"ฉันมีริ้วรอย"<br>"ผิวหมองคล้ำ"</div>
+    </div>
+    <div style="display:flex;align-items:center;padding:0 10px;font-size:18px;color:var(--red);font-weight:700">≠</div>
+    <div style="background:var(--amber-l);border-radius:0 var(--r-sm) var(--r-sm) 0;padding:14px 16px;border:1px solid rgba(158,106,14,0.2)">
+      <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--amber);margin-bottom:6px">ความคาดหวัง</div>
+      <div style="font-size:12px;color:#5C3A08;line-height:1.6">ภาพที่อยากให้<br><em>เกิดขึ้น</em><br><br>"อยากผิวกระจ่างใส"<br>"อยากดูอ่อนเยาว์"</div>
+    </div>
+  </div>
+
+  <div class="sens-item" style="margin-bottom:6px">
+    กังวลเรื่อง <strong>ริ้วรอย</strong> แต่คาดหวัง <strong>กระจ่างใส</strong>
+    → ในหัวเขา "หน้าดีขึ้น = สว่างขึ้น" ไม่ใช่ "ร่องลึกลดลง"
+    → สูตรแก้ริ้วรอยได้จริง แต่เขาไม่ได้สังเกตตรงนั้น
+    → report ว่า "ไม่เห็นผล" ทั้งที่สูตรทำงานอยู่
+  </div>
+
+  <div class="insight ins-red">
+    นี่คือ <strong>false negative ที่ไม่ได้มาจากสูตร</strong>
+    — มาจากการที่ tester วัดผลผิดมิติตั้งแต่ต้น
+    แก้ได้ด้วยการ re-brief ก่อน W2 ให้ focus สังเกต
+    ริ้วรอยโดยเฉพาะ ไม่ต้อง exclude ออกจากกลุ่ม
+  </div>
+</div>
     <div class="tab-section" id="w0-sc">
       <div class="card" style="margin-bottom:18px">
         <div class="card-title">คะแนน Baseline 5 มิติ (เฉลี่ยกลุ่ม, scale 1–5 absolute)</div>
